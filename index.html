@@ -5,19 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mymuna Sultana · software and data engineer</title>
 <link rel="icon" href="data:,">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0c0e11">
+<script>try{if(localStorage.getItem('theme')==='light')document.documentElement.dataset.theme='light'}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600&family=Funnel+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#ffffff; --ink:#111316; --ink-2:#51575f; --ink-3:#868c95; --rule:#e5e7ea; --soft:#f3f4f6; --earth:#eef1f4; --land:#c3c9d1;
-  --debris:#e4572e; --hi:#2747ff; --hi-soft:#e9ecff; --clean:#0f7b55; --clean-soft:#e3f3ec;
+  /* dark (default) */
+  --bg:#0c0e11; --bg-rgb:12,14,17; --surface:#15181d; --soft:#1b1f25; --hover:#242932; --rule:#262b33; --rule-2:#363c46;
+  --ink:#eceef1; --ink-2:#a9afb8; --ink-3:#7a818c; --on-ink:#0c0e11; --ink-hover:#ffffff;
+  --hi:#7088ff; --hi-rgb:112,136,255; --hi-2:#aebaff; --hi-btn:#4f6bff; --hi-btn-hover:#6079ff; --hi-soft:rgba(112,136,255,.18);
+  --clean:#3cc98e; --clean-soft:rgba(60,201,142,.13); --clean-edge:rgba(60,201,142,.45); --clean-btn:#3cc98e; --clean-btn-hover:#52d69e; --on-clean:#06150e;
+  --debris:#ff7a52; --sat:#d6dae0; --sat-rb:#7f8792;
+  --earth:#13171c; --earth-edge:#242a32; --land:#3f4752; --grid:#1f242b; --area:rgba(112,136,255,.09); --compare:#8a919b;
+  --s1:#e2e8ff; --s2:#b3c1f6; --s3:#8399e4; --s4:#6077c6; --s5:#455798; --s6:#2b313d;
+  --shadow:rgba(0,0,0,.5); --scroll:#3a404a;
+  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23a9afb8' stroke-width='1.6'%3E%3Cpath d='M3 4.5 6 7.5 9 4.5'/%3E%3C/svg%3E");
+  color-scheme:dark;
   --display:"Funnel Display",system-ui,sans-serif; --sans:"Funnel Sans",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
   --ease-out:cubic-bezier(.23,1,.32,1);
+}
+:root[data-theme="light"]{
+  --bg:#ffffff; --bg-rgb:255,255,255; --surface:#ffffff; --soft:#f3f4f6; --hover:#e8eaed; --rule:#e5e7ea; --rule-2:#d5d8dc;
+  --ink:#111316; --ink-2:#51575f; --ink-3:#868c95; --on-ink:#ffffff; --ink-hover:#2a2d33;
+  --hi:#2747ff; --hi-rgb:39,71,255; --hi-2:#7a8cff; --hi-btn:#2747ff; --hi-btn-hover:#1c39e0; --hi-soft:#e9ecff;
+  --clean:#0f7b55; --clean-soft:#e3f3ec; --clean-edge:#9fd3bd; --clean-btn:#0f7b55; --clean-btn-hover:#0c6847; --on-clean:#ffffff;
+  --debris:#e4572e; --sat:#15181d; --sat-rb:#7a818b;
+  --earth:#f1f3f5; --earth-edge:#dde1e6; --land:#8e97a3; --grid:#eceef0; --area:#eef2f7; --compare:#868c95;
+  --s1:#1f3550; --s2:#3c5a7d; --s3:#6584a8; --s4:#93acc8; --s5:#bfd0e2; --s6:#e3e9f0;
+  --shadow:rgba(17,19,22,.08); --scroll:#c9cdd3;
+  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23515760' stroke-width='1.6'%3E%3Cpath d='M3 4.5 6 7.5 9 4.5'/%3E%3C/svg%3E");
   color-scheme:light;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scrollbar-color:#c9cdd3 transparent}
+html{scrollbar-color:var(--scroll) transparent}
 body{background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 var(--sans);-webkit-font-smoothing:antialiased}
 ::selection{background:var(--hi-soft)}
 :focus-visible{outline:2px solid var(--hi);outline-offset:2px;border-radius:6px}
@@ -31,27 +54,28 @@ button{font:inherit;color:inherit}
 .seg{display:inline-flex;padding:3px;border-radius:999px;background:var(--soft);gap:2px}
 .seg button{border:0;background:none;height:2rem;padding:0 .85rem;border-radius:999px;font-size:.875rem;font-weight:500;color:var(--ink-2);cursor:pointer;white-space:nowrap;transition:background-color .15s ease,color .15s ease}
 .seg button:hover{color:var(--ink)}
-.seg button[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(17,19,22,.08),0 0 0 1px rgba(17,19,22,.04)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px var(--shadow),0 0 0 1px var(--rule)}
 .seg button small{font:400 .75rem var(--mono);color:var(--ink-3);margin-left:.35rem}
-.btn{display:inline-flex;align-items:center;gap:.5rem;height:2.6rem;padding:0 1.1rem;border-radius:999px;border:1px solid var(--rule);background:#fff;font-weight:500;font-size:.9375rem;text-decoration:none;cursor:pointer;transition:background-color .15s ease,border-color .15s ease,transform .12s var(--ease-out)}
-.btn:hover{background:var(--soft);border-color:#d5d8dc}
+.btn{display:inline-flex;align-items:center;gap:.5rem;height:2.6rem;padding:0 1.1rem;border-radius:999px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);font-weight:500;font-size:.9375rem;text-decoration:none;cursor:pointer;transition:background-color .15s ease,border-color .15s ease,transform .12s var(--ease-out)}
+.btn:hover{background:var(--soft);border-color:var(--rule-2)}
 .btn:active{transform:scale(.97)}
-.btn.dark{background:var(--ink);border-color:var(--ink);color:#fff}
-.btn.dark:hover{background:#2a2d33}
-.btn.blue{background:var(--hi);border-color:var(--hi);color:#fff}
-.btn.blue:hover{background:#1c39e0}
-.btn.green{background:var(--clean);border-color:var(--clean);color:#fff}
-.btn.green:hover{background:#0c6847}
+.btn.dark{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.btn.dark:hover{background:var(--ink-hover);border-color:var(--ink-hover)}
+.btn.blue{background:var(--hi-btn);border-color:var(--hi-btn);color:#fff}
+.btn.blue:hover{background:var(--hi-btn-hover);border-color:var(--hi-btn-hover)}
+.btn.green{background:var(--clean-btn);border-color:var(--clean-btn);color:var(--on-clean)}
+.btn.green:hover{background:var(--clean-btn-hover);border-color:var(--clean-btn-hover)}
 .icon{width:2.25rem;height:2.25rem;border-radius:50%;border:0;background:var(--soft);display:inline-grid;place-items:center;cursor:pointer;transition:background-color .15s ease,transform .12s var(--ease-out)}
-.icon:hover{background:#e8eaed}.icon:active{transform:scale(.94)}
+.icon:hover{background:var(--hover)}.icon:active{transform:scale(.94)}
 .icon svg{width:15px;height:15px}
+.theme svg{width:16px;height:16px}
 .icon:disabled{opacity:.35;cursor:default;transform:none}
-.chip{border:1px solid var(--rule);background:#fff;height:2rem;padding:0 .8rem;border-radius:999px;font-size:.875rem;font-weight:500;color:var(--ink-2);cursor:pointer;transition:background-color .15s ease,border-color .15s ease,color .15s ease,transform .12s var(--ease-out)}
-.chip:hover{border-color:#cfd3d8;color:var(--ink)}
+.chip{border:1px solid var(--rule);background:var(--surface);height:2rem;padding:0 .8rem;border-radius:999px;font-size:.875rem;font-weight:500;color:var(--ink-2);cursor:pointer;transition:background-color .15s ease,border-color .15s ease,color .15s ease,transform .12s var(--ease-out)}
+.chip:hover{border-color:var(--rule-2);color:var(--ink)}
 .chip:active{transform:scale(.96)}
-.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
-select{appearance:none;font:500 .9375rem var(--sans);color:var(--ink);height:2.5rem;padding:0 2.25rem 0 1rem;border-radius:999px;border:1px solid var(--rule);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23515760' stroke-width='1.6'%3E%3Cpath d='M3 4.5 6 7.5 9 4.5'/%3E%3C/svg%3E") no-repeat right .9rem center;cursor:pointer}
-select:hover{border-color:#cfd3d8}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+select{appearance:none;font:500 .9375rem var(--sans);color:var(--ink);height:2.5rem;padding:0 2.25rem 0 1rem;border-radius:999px;border:1px solid var(--rule);background:var(--surface) var(--chev) no-repeat right .9rem center;cursor:pointer}
+select:hover{border-color:var(--rule-2)}
 .lbl{display:block;font-size:.8125rem;color:var(--ink-3);margin-bottom:.4rem}
 
 /* hero */
@@ -79,13 +103,13 @@ h1{font:600 clamp(2.75rem,4.8vw,4.4rem)/.95 var(--display);letter-spacing:-.04em
 .steps::before,.steps .fill{content:"";position:absolute;left:7px;right:calc(20% - 7px);top:7px;height:2px;border-radius:2px;background:var(--rule)}
 .steps .fill{background:var(--hi);transform-origin:left;transform:scaleX(var(--p,0));transition:transform .9s cubic-bezier(.77,0,.175,1)}
 .step{position:relative;border:0;background:none;padding:0 0 0 0;text-align:left;cursor:pointer;display:grid;gap:.45rem;justify-items:start;color:var(--ink-3)}
-.step i{width:16px;height:16px;border-radius:50%;background:#fff;border:2px solid #cfd3d8;transition:border-color .2s ease,background-color .2s ease,transform .2s var(--ease-out)}
+.step i{width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--rule-2);transition:border-color .2s ease,background-color .2s ease,transform .2s var(--ease-out)}
 .step span{font:500 .75rem var(--mono);letter-spacing:0;white-space:nowrap}
 .step:hover{color:var(--ink)}
 .step:hover i{transform:scale(1.15)}
 .step.done i{border-color:var(--hi);background:var(--hi)}
 .step[aria-selected="true"]{color:var(--ink)}
-.step[aria-selected="true"] i{border-color:var(--hi);background:#fff;box-shadow:0 0 0 4px var(--hi-soft)}
+.step[aria-selected="true"] i{border-color:var(--hi);background:var(--bg);box-shadow:0 0 0 4px var(--hi-soft)}
 .step.next i{border-style:dashed}
 .jcard{position:relative;min-height:13.5rem;transition:opacity .18s ease,transform .25s var(--ease-out)}
 .jcard.out{opacity:0;transform:translateY(6px)}
@@ -104,11 +128,11 @@ h1{font:600 clamp(2.75rem,4.8vw,4.4rem)/.95 var(--display);letter-spacing:-.04em
 .panel .row{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
 .clock{font-size:.8125rem;color:var(--ink-2);min-width:12.5rem}
 .caption{font-size:.8125rem;line-height:1.45;color:var(--ink-3)}
-.tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--rule);border-radius:10px;padding:.5rem .7rem;font-size:.8125rem;line-height:1.35;box-shadow:0 8px 24px rgba(17,19,22,.08),0 2px 6px rgba(17,19,22,.05);opacity:0;transform:translateY(4px);transition:opacity .12s ease,transform .15s var(--ease-out);white-space:nowrap;z-index:5}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:.5rem .7rem;font-size:.8125rem;line-height:1.35;box-shadow:0 8px 24px var(--shadow),0 2px 6px var(--shadow);opacity:0;transform:translateY(4px);transition:opacity .12s ease,transform .15s var(--ease-out);white-space:nowrap;z-index:5}
 .tip.on{opacity:1;transform:none}
 .tip b{display:block;font-weight:600;font-size:.875rem}
 .tip span{color:var(--ink-3)}
-.ca{position:absolute;right:1.5rem;top:6rem;width:min(22rem,calc(100% - 3rem));background:#fff;border:1px solid var(--rule);border-radius:16px;padding:1.1rem 1.2rem;box-shadow:0 12px 32px rgba(17,19,22,.08);opacity:0;transform:translateY(8px) scale(.98);transform-origin:top right;pointer-events:none;transition:opacity .2s ease,transform .25s var(--ease-out)}
+.ca{position:absolute;right:1.5rem;top:6rem;width:min(22rem,calc(100% - 3rem));background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:1.1rem 1.2rem;box-shadow:0 12px 32px var(--shadow);opacity:0;transform:translateY(8px) scale(.98);transform-origin:top right;pointer-events:none;transition:opacity .2s ease,transform .25s var(--ease-out)}
 .ca.on{opacity:1;transform:none;pointer-events:auto}
 .ca h3{font:600 1.125rem/1.25 var(--display);letter-spacing:-.01em}
 .ca .pair{margin-top:.2rem;font-size:.875rem;color:var(--ink-2)}
@@ -122,6 +146,7 @@ h1{font:600 clamp(2.75rem,4.8vw,4.4rem)/.95 var(--display);letter-spacing:-.04em
 section.proj{padding:7rem 0 2rem;border-top:1px solid var(--rule)}
 .head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1rem 3rem;align-items:end;margin-bottom:2.25rem}
 h2{font:600 clamp(2rem,3.6vw,2.75rem)/1.05 var(--display);letter-spacing:-.03em}
+.head > .btn{justify-self:start}
 .head p{margin-top:.75rem;max-width:36rem;color:var(--ink-2);font-size:1.125rem;line-height:1.5;text-wrap:pretty}
 .head .meta{display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;margin-top:1rem;font-size:.9375rem;color:var(--ink-3)}
 .head .meta a{color:var(--ink);font-weight:500}
@@ -169,7 +194,8 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
   .intro{position:static}
   .hero canvas{position:relative;display:block;height:min(78vw,30rem);margin-top:1.5rem}
   .globe-box{position:relative}
-  .panel,.journey,.explore{position:static;text-align:left;max-width:none;width:auto;margin-top:1.5rem;justify-items:start}
+  .panel,.explore{position:static;text-align:left;max-width:none;width:auto;margin-top:1.5rem;justify-items:start}
+  .journey{position:static;width:auto;margin-top:1.5rem}
   .explore{margin-bottom:2.5rem}
   .stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem}
   .stats .n{font-size:1.6rem}
@@ -180,7 +206,7 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
   footer .grid{grid-template-columns:1fr}
   .chart{height:16rem}
 }
-@media (max-width:900px){ .hero .globe-holder{position:relative} }
+@media (max-width:900px){ .hero .globe-holder{position:relative} .hero .journey{width:auto;max-width:34rem;padding-top:0} }
 </style>
 </head>
 <body>
@@ -190,6 +216,7 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
     <nav>
       <a class="me" href="#top">Mymuna Sultana</a>
       <a href="#orbitwatch">Work</a><a href="#">CV</a><a href="https://github.com/smymuna">GitHub</a><a href="mailto:mymuna.gmu@gmail.com">Email</a>
+      <button class="icon theme" id="theme" aria-label="Switch to light mode"></button>
     </nav>
     <div class="intro">
       <h1>Mymuna Sultana</h1>
@@ -331,7 +358,7 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
   <footer>
     <div class="grid">
       <div>
-        <h2>Open to software and data engineering roles in Germany.</h2>
+        <h2>Open to software and data engineering roles.</h2>
         <div class="actions">
           <a class="btn dark" href="mailto:mymuna.gmu@gmail.com">mymuna.gmu@gmail.com</a>
           <a class="btn" href="https://linkedin.com/in/mymunasultana">LinkedIn</a>
@@ -360,6 +387,13 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
 <script>
 (() => {
 'use strict';
+let C = {};
+const readTheme = () => {
+  const cs = getComputedStyle(document.documentElement);
+  C = {}; ['bg', 'bg-rgb', 'ink', 'ink-3', 'earth', 'earth-edge', 'land', 'sat', 'sat-rb', 'debris', 'hi', 'hi-2', 'hi-rgb', 'clean', 'clean-soft', 'clean-edge', 'grid', 'area', 'compare', 's1', 's2', 's3', 's4', 's5', 's6']
+    .forEach(k => { C[k] = cs.getPropertyValue('--' + k).trim(); });
+};
+readTheme();
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const nf = new Intl.NumberFormat('en-GB'), D = Math.PI / 180, RE = 6371;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -438,17 +472,17 @@ function positions() {
   return true;
 }
 
-const COLORS = ['#15181d', '#e4572e', '#7a818b', '#7a818b'];
+const COLORS = () => [C.sat, C.debris, C['sat-rb'], C['sat-rb']];
 function draw() {
   const { w, h, cx, cy, dpr } = G, k = G.R * G.zoom / RE;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
   const cl = Math.cos(G.lon), sl = Math.sin(G.lon), cp = Math.cos(G.lat), sp = Math.sin(G.lat);
   const rDisk = RE * k;
   // earth
-  ctx.fillStyle = '#f1f3f5'; ctx.beginPath(); ctx.arc(cx, cy, rDisk, 0, Math.PI * 2); ctx.fill();
-  ctx.strokeStyle = '#dde1e6'; ctx.lineWidth = 1; ctx.stroke();
+  ctx.fillStyle = C.earth; ctx.beginPath(); ctx.arc(cx, cy, rDisk, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = C['earth-edge']; ctx.lineWidth = 1; ctx.stroke();
   if (land) {
-    ctx.fillStyle = '#8e97a3'; const s = Math.min(3.4, 2.3 * Math.sqrt(G.zoom));
+    ctx.fillStyle = C.land; const s = Math.min(3.4, 2.3 * Math.sqrt(G.zoom));
     for (let i = 0; i < land.length; i += 3) {
       const x = land[i], y = land[i+1], z = land[i+2];
       const x1 = x*cl + y*sl, y1 = -x*sl + y*cl, x2 = x1*cp + z*sp;
@@ -468,7 +502,7 @@ function draw() {
   const dim = G.mode === 'pair', fade = (dim ? .3 : 1) * G.satA, s = 1.35;
   if (fade > .01) for (const pass of [.3, 1]) for (let t = 0; t < 3; t++) {
     if (G.filter !== 'all' && +G.filter !== t) continue;
-    ctx.fillStyle = COLORS[t]; ctx.globalAlpha = (pass === 1 ? (t === 1 ? .85 : .42) : .22) * fade;
+    ctx.fillStyle = COLORS()[t]; ctx.globalAlpha = (pass === 1 ? (t === 1 ? .85 : .42) : .22) * fade;
     for (let i = 0; i < n; i++) {
       if (DZ[i] !== pass || (types[i] === 3 ? 2 : types[i]) !== t) continue;
       const x = SX[i], y = SY[i];
@@ -481,11 +515,11 @@ function draw() {
   if (G.mode === 'story') drawStory(k, cl, sl, cp, sp);
   if (!mobile()) { // keep the text column readable whatever the globe does behind it
     const g = ctx.createLinearGradient(0, 0, w * .5, 0);
-    g.addColorStop(0, 'rgba(255,255,255,.94)'); g.addColorStop(.72, 'rgba(255,255,255,.86)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+    g.addColorStop(0, `rgba(${C['bg-rgb']},.94)`); g.addColorStop(.72, `rgba(${C['bg-rgb']},.86)`); g.addColorStop(1, `rgba(${C['bg-rgb']},0)`);
     ctx.fillStyle = g; ctx.fillRect(0, 0, w * .5, h);
   }
   if (G.hover >= 0 && DZ[G.hover] > 0) {
-    ctx.strokeStyle = '#111316'; ctx.lineWidth = 1.5;
+    ctx.strokeStyle = C.ink; ctx.lineWidth = 1.5;
     ctx.beginPath(); ctx.arc(SX[G.hover], SY[G.hover], 6, 0, Math.PI * 2); ctx.stroke();
   }
 }
@@ -494,7 +528,7 @@ function proj(x, y, z, k, cl, sl, cp, sp) {
   return [G.cx + y1*k, G.cy - z2*k, x2 > 0 || y1*y1 + z2*z2 > RE*RE];
 }
 function drawPair(k, cl, sl, cp, sp) {
-  const cols = ['#2747ff', '#7a8cff'];
+  const cols = [C.hi, C['hi-2']];
   tracks.forEach((tr, j) => {
     ctx.strokeStyle = cols[j]; ctx.lineWidth = 1.5; ctx.setLineDash(j ? [5, 4] : []);
     ctx.beginPath(); let pen = false;
@@ -505,9 +539,9 @@ function drawPair(k, cl, sl, cp, sp) {
   pair.now.forEach((p, j) => {
     if (!p) return;
     const [x, y, vis] = proj(p[0], p[1], p[2], k, cl, sl, cp, sp); if (!vis) return;
-    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x, y, 7, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = C.bg; ctx.beginPath(); ctx.arc(x, y, 7, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = cols[j]; ctx.beginPath(); ctx.arc(x, y, 4.5, 0, Math.PI * 2); ctx.fill();
-    ctx.font = '500 12px "JetBrains Mono", monospace'; ctx.fillStyle = '#111316';
+    ctx.font = '500 12px "JetBrains Mono", monospace'; ctx.fillStyle = C.ink;
     ctx.textAlign = j ? 'right' : 'left'; ctx.fillText(pair.names[j], x + (j ? -12 : 12), y + (j ? 16 : -10));
   });
 }
@@ -657,13 +691,15 @@ const STOPS = [
     title: 'Software Developer', org: 'Mason LIFE Program, George Mason University',
     stats: [{ n: 6, suf: ' → 1', l: 'Excel trackers replaced by one PostgreSQL system' }, { n: 5, pre: '4–', suf: ' h', l: 'of manual work saved every week' }, { n: 8, l: 'Tableau and Power BI dashboards for 15+ staff' }],
     tags: ['Python', 'Flask', 'PostgreSQL', 'REST APIs', 'SQL'] },
-  { year: 'Next', lat: 51.2, lon: 10.4, label: 'Germany', where: 'Next · Germany', next: true,
-    title: 'Your team?', org: 'Software and data engineering roles in Germany',
+  { year: 'Next', lat: 50.5, lon: 9.5, label: 'Next', where: 'Next', next: true, open: true,
+    title: 'Your team?', org: 'Software and data engineering roles. Open to relocating.',
     tags: ['EU Blue Card eligible', 'Interviews in CET', 'English · German A1'], cta: true },
 ];
+const OPEN = [[52.52, 13.40], [52.37, 4.90], [48.86, 2.35], [40.42, -3.70], [59.33, 18.07], [53.35, -6.26], [48.21, 16.37], [52.23, 21.01], [38.72, -9.14], [60.17, 24.94], [45.46, 9.19], [50.85, 4.35]]
+  .map(([lat, lon]) => ({ lat, lon }));
 const unit = st => { const la = st.lat * D, lo = st.lon * D; return [Math.cos(la) * Math.cos(lo), Math.cos(la) * Math.sin(lo), Math.sin(la)]; };
-const U = STOPS.map(unit);
-const J = { i: -1, seg: STOPS.map(() => 0), auto: null };
+const U = STOPS.map(unit), UO = OPEN.map(unit);
+const J = { i: -1, seg: STOPS.map(() => 0), fan: 0, auto: null };
 const stepsEl = $('#steps'), card = $('#jcard');
 STOPS.forEach((st, i) => {
   const b = document.createElement('button');
@@ -706,13 +742,15 @@ function goTo(i, user) {
   setTimeout(() => { card.innerHTML = cardHTML(STOPS[i]); card.setAttribute('aria-labelledby', 'step-' + i); requestAnimationFrame(() => { card.classList.remove('out'); countUp(); }); }, reduce ? 0 : 170);
   // arcs: draw the newest leg, keep earlier legs, clear later ones
   STOPS.forEach((_, s) => { if (s >= i) J.seg[s] = 0; else if (s < i - 1 || i < prev) J.seg[s] = 1; });
-  if (i > 0 && i > prev) { const s = i - 1; J.seg[s] = 0; tween(1200, f => { J.seg[s] = f; }); }
+  J.fan = 0;
+  if (i > 0 && i > prev) { const s = i - 1; J.seg[s] = 0; tween(1200, f => { J.seg[s] = f; }, () => { if (STOPS[i].open) tween(900, f => { J.fan = f; }); }); }
+  else if (STOPS[i].open) J.fan = 1;
   // camera
   if (G.mode !== 'story') return;
   const st = STOPS[i], l0 = G.lon, p0 = G.lat, z0 = G.zoom;
   let dl = st.lon * D - l0; dl = Math.atan2(Math.sin(dl), Math.cos(dl));
-  const tp = st.lat * D * .7; G.vlon = G.vlat = 0;
-  tween(1200, f => { G.lon = l0 + dl * f; G.lat = p0 + (tp - p0) * f; G.zoom = z0 + (1.12 - z0) * f; });
+  const tp = st.lat * D * (st.open ? .9 : .7), zt = st.open ? 2 : 1.12; G.vlon = G.vlat = 0;
+  tween(1200, f => { G.lon = l0 + dl * f; G.lat = p0 + (tp - p0) * f; G.zoom = z0 + (zt - z0) * f; });
 }
 function stopAuto() { if (J.auto) { clearInterval(J.auto); J.auto = null; } }
 function playStory() {
@@ -728,7 +766,7 @@ function drawStory(k, cl, sl, cp, sp) {
     const a = U[s], b = U[s + 1], dot = a[0]*b[0] + a[1]*b[1] + a[2]*b[2], om = Math.acos(Math.max(-1, Math.min(1, dot)));
     if (om < 1e-3) continue;
     const lift = Math.min(.32, om * .22), N = 80, so = Math.sin(om);
-    ctx.strokeStyle = '#2747ff'; ctx.lineWidth = 2; ctx.beginPath(); let pen = false, hx = 0, hy = 0;
+    ctx.strokeStyle = C.hi; ctx.lineWidth = 2; ctx.beginPath(); let pen = false, hx = 0, hy = 0;
     for (let j = 0; j <= N * p; j++) {
       const t = j / N, wa = Math.sin((1 - t) * om) / so, wb = Math.sin(t * om) / so, r = RE * (1 + lift * Math.sin(Math.PI * t));
       const [x, y, vis] = proj((wa*a[0] + wb*b[0]) * r, (wa*a[1] + wb*b[1]) * r, (wa*a[2] + wb*b[2]) * r, k, cl, sl, cp, sp);
@@ -736,9 +774,25 @@ function drawStory(k, cl, sl, cp, sp) {
       pen ? ctx.lineTo(x, y) : ctx.moveTo(x, y); pen = true; hx = x; hy = y;
     }
     ctx.stroke();
-    if (p < 1 && pen) { ctx.fillStyle = '#2747ff'; ctx.beginPath(); ctx.arc(hx, hy, 3.5, 0, Math.PI * 2); ctx.fill(); }
+    if (p < 1 && pen) { ctx.fillStyle = C.hi; ctx.beginPath(); ctx.arc(hx, hy, 3.5, 0, Math.PI * 2); ctx.fill(); }
   }
   const seen = new Set(), now = performance.now();
+  const onScreen = u => { const x1 = u[0]*cl + u[1]*sl, y1 = -u[0]*sl + u[1]*cl, x2 = x1*cp + u[2]*sp, z2 = -x1*sp + u[2]*cp;
+    return x2 > 0 ? [G.cx + y1 * RE * k, G.cy - z2 * RE * k] : null; };
+  if (STOPS[J.i] && STOPS[J.i].open && J.fan > 0) {
+    // the last leg fans out from the middle of Europe to open places across the EU
+    const c = onScreen(U[J.i]);
+    UO.forEach((u, n) => {
+      const f = Math.max(0, Math.min(1, J.fan * 1.6 - n * .05)), p = onScreen(u); if (!c || !p || f <= 0) return;
+      ctx.strokeStyle = `rgba(${C['hi-rgb']},.4)`; ctx.lineWidth = 1.25; ctx.setLineDash([3, 4]);
+      ctx.beginPath(); ctx.moveTo(c[0], c[1]); ctx.lineTo(c[0] + (p[0] - c[0]) * f, c[1] + (p[1] - c[1]) * f); ctx.stroke(); ctx.setLineDash([]);
+      if (f < 1) return;
+      const ph = reduce ? 0 : ((now + n * 230) % 2400) / 2400;
+      ctx.strokeStyle = `rgba(${C['hi-rgb']},${.6 - ph * .35})`; ctx.lineWidth = 1.5; ctx.setLineDash([2.5, 2.5]);
+      ctx.beginPath(); ctx.arc(p[0], p[1], 5 + ph * 3, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = C.bg; ctx.beginPath(); ctx.arc(p[0], p[1], 2.5, 0, Math.PI * 2); ctx.fill();
+    });
+  }
   for (let s = 0; s <= J.i; s++) {
     const st = STOPS[s], u = U[s];
     const x1 = u[0]*cl + u[1]*sl, y1 = -u[0]*sl + u[1]*cl, x2 = x1*cp + u[2]*sp, z2 = -x1*sp + u[2]*cp;
@@ -746,17 +800,17 @@ function drawStory(k, cl, sl, cp, sp) {
     const x = G.cx + y1 * RE * k, y = G.cy - z2 * RE * k, active = s === J.i;
     if (active && !reduce) {
       const ph = (now % 1800) / 1800;
-      ctx.strokeStyle = `rgba(39,71,255,${(1 - ph) * .5})`; ctx.lineWidth = 2;
+      ctx.strokeStyle = `rgba(${C['hi-rgb']},${(1 - ph) * .55})`; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.arc(x, y, 6 + ph * 16, 0, Math.PI * 2); ctx.stroke();
     }
-    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x, y, active ? 7 : 5.5, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = '#2747ff'; ctx.beginPath(); ctx.arc(x, y, active ? 4.5 : 3.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = C.bg; ctx.beginPath(); ctx.arc(x, y, active ? 7 : 5.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = C.hi; ctx.beginPath(); ctx.arc(x, y, active ? 4.5 : 3.5, 0, Math.PI * 2); ctx.fill();
     if (!seen.has(st.label)) {
       seen.add(st.label);
       ctx.font = `${active ? 600 : 500} 12px "Funnel Sans", system-ui, sans-serif`; ctx.textAlign = 'left';
       const label = st.label, tw = ctx.measureText(label).width;
-      ctx.fillStyle = 'rgba(255,255,255,.88)'; ctx.fillRect(x + 11, y - 9, tw + 10, 18);
-      ctx.fillStyle = '#111316'; ctx.fillText(label, x + 16, y + 4);
+      ctx.fillStyle = `rgba(${C['bg-rgb']},.88)`; ctx.fillRect(x + 11, y - 9, tw + 10, 18);
+      ctx.fillStyle = C.ink; ctx.fillText(label, x + 16, y + 4);
     }
   }
 }
@@ -847,18 +901,18 @@ function renderGrid(focus) {
   const ranked = sel.map(c => ({ c, v: avg(c, GS.s, steps) })).sort((a, b) => a.v - b.v), best = focus || ranked[0].c;
   box.innerHTML = '';
   const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Grid carbon intensity over the day for the selected countries' }, box);
-  for (let v = 0; v <= max; v += max / 4) { svgEl('line', { x1: pl, x2: W - pr, y1: Y(v), y2: Y(v), stroke: '#eceef0' }, svg); svgEl('text', { x: pl - 8, y: Y(v) + 4, 'text-anchor': 'end', class: 'axis' }, svg).textContent = Math.round(v); }
+  for (let v = 0; v <= max; v += max / 4) { svgEl('line', { x1: pl, x2: W - pr, y1: Y(v), y2: Y(v), stroke: C.grid }, svg); svgEl('text', { x: pl - 8, y: Y(v) + 4, 'text-anchor': 'end', class: 'axis' }, svg).textContent = Math.round(v); }
   GS.times.forEach((t, i) => { if (i % 12 === 0) svgEl('text', { x: X(i), y: H - 6, 'text-anchor': 'middle', class: 'axis' }, svg).textContent = berlin.format(t * 1000); });
   const mi = GS.times.findIndex(t => t > GS.measuredUntil);
-  if (mi > 0) svgEl('line', { x1: X(mi), x2: X(mi), y1: pt, y2: H - pb, stroke: '#b9bec5', 'stroke-dasharray': '2 3' }, svg);
+  if (mi > 0) svgEl('line', { x1: X(mi), x2: X(mi), y1: pt, y2: H - pb, stroke: C['ink-3'], 'stroke-dasharray': '2 3' }, svg);
   const band = svgEl('g', { class: 'band', tabindex: 0, role: 'slider', 'aria-label': 'Job start time', 'aria-valuemin': 0, 'aria-valuemax': N - steps, 'aria-valuenow': GS.s, 'aria-valuetext': berlin.format(GS.times[GS.s] * 1000) }, svg);
-  svgEl('rect', { class: 'b', x: X(GS.s), y: pt, width: X(GS.s + steps - 1) - X(GS.s) + (W - pl - pr) / (N - 1), height: H - pt - pb, rx: 6, fill: '#e3f3ec', stroke: '#9fd3bd' }, band);
+  svgEl('rect', { class: 'b', x: X(GS.s), y: pt, width: X(GS.s + steps - 1) - X(GS.s) + (W - pl - pr) / (N - 1), height: H - pt - pb, rx: 6, fill: C['clean-soft'], stroke: C['clean-edge'] }, band);
   sel.sort((a, b) => (a === best) - (b === best)).forEach(c => {
     let d = ''; GS.series[c].forEach((v, i) => { if (v == null) return; d += (d ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1); });
     const isBest = c === best;
-    svgEl('path', { d, fill: 'none', stroke: isBest ? '#0f7b55' : '#111316', 'stroke-opacity': isBest ? 1 : .32, 'stroke-width': isBest ? 2.25 : 1.25, 'stroke-linejoin': 'round', 'data-c': c }, svg);
+    svgEl('path', { d, fill: 'none', stroke: isBest ? C.clean : C.ink, 'stroke-opacity': isBest ? 1 : .38, 'stroke-width': isBest ? 2.25 : 1.25, 'stroke-linejoin': 'round', 'data-c': c }, svg);
     const li = GS.series[c].length - 1;
-    svgEl('text', { x: X(li) - 2, y: Y(GS.series[c][li]) - 6, 'text-anchor': 'end', class: 'axis', style: isBest ? 'fill:#0f7b55' : '' }, svg).textContent = c.toUpperCase();
+    svgEl('text', { x: X(li) - 2, y: Y(GS.series[c][li]) - 6, 'text-anchor': 'end', class: 'axis', style: isBest ? 'fill:' + C.clean : '' }, svg).textContent = c.toUpperCase();
   });
   // drag + keys
   const toIdx = x => Math.round((x - pl) / (W - pl - pr) * (N - 1) - steps / 2);
@@ -879,7 +933,7 @@ function renderGrid(focus) {
 }
 
 /* ------------------------------------------------------------------ Climate */
-const SECT = [['energy', 'Energy industries', '#1f3550'], ['industry', 'Manufacturing', '#3c5a7d'], ['transport', 'Transport', '#6584a8'], ['buildings', 'Buildings', '#93acc8'], ['agriculture', 'Agriculture', '#bfd0e2'], ['other', 'Everything else', '#e3e9f0']];
+const SECT = [['energy', 'Energy industries', 's1'], ['industry', 'Manufacturing', 's2'], ['transport', 'Transport', 's3'], ['buildings', 'Buildings', 's4'], ['agriculture', 'Agriculture', 's5'], ['other', 'Everything else', 's6']];
 const CS = { a: 'DE', b: 'FR', mode: 'total', yi: null };
 fetch('data/emissions.json').then(r => r.json()).then(e => {
   CS.e = e; CS.yi = e.years.length - 1;
@@ -905,7 +959,7 @@ function renderClimate() {
   const X = i => pl + (W - pl - pr) * i / (N - 1), Y = v => pt + (H - pt - pb) * (1 - v / max);
   box.innerHTML = '';
   const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': `Greenhouse gas emissions for ${ca.name}, 1990 to 2024` }, box);
-  for (let v = 0; v <= max + 1e-9; v += max / 4) { svgEl('line', { x1: pl, x2: W - pr, y1: Y(v), y2: Y(v), stroke: '#eceef0' }, svg); svgEl('text', { x: pl - 8, y: Y(v) + 4, 'text-anchor': 'end', class: 'axis' }, svg).textContent = nf.format(Math.round(v)); }
+  for (let v = 0; v <= max + 1e-9; v += max / 4) { svgEl('line', { x1: pl, x2: W - pr, y1: Y(v), y2: Y(v), stroke: C.grid }, svg); svgEl('text', { x: pl - 8, y: Y(v) + 4, 'text-anchor': 'end', class: 'axis' }, svg).textContent = nf.format(Math.round(v)); }
   ys.forEach((y, i) => { if (y % 5 === 0) svgEl('text', { x: X(i), y: H - 6, 'text-anchor': 'middle', class: 'axis' }, svg).textContent = y; });
   const line = arr => arr.reduce((d, v, i) => v == null ? d : d + (d ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1), '');
   if (CS.mode === 'sector') {
@@ -913,18 +967,18 @@ function renderClimate() {
     SECT.forEach(([k, , col]) => {
       const top = base.map((b, i) => b + st[i][k]);
       const d = top.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1)).join('') + base.map((v, i) => 'L' + X(N - 1 - i).toFixed(1) + ' ' + Y(base[N - 1 - i]).toFixed(1)).join('') + 'Z';
-      svgEl('path', { d, fill: col }, svg); base = top;
+      svgEl('path', { d, fill: C[col] }, svg); base = top;
     });
   } else {
     const da = line(ca.total);
-    svgEl('path', { d: da + `L${X(N - 1)} ${Y(0)}L${X(0)} ${Y(0)}Z`, fill: '#eef2f7' }, svg);
-    if (cb) svgEl('path', { d: line(cb.total), fill: 'none', stroke: '#868c95', 'stroke-width': 1.5, 'stroke-dasharray': '5 4' }, svg);
-    svgEl('path', { d: da, fill: 'none', stroke: '#111316', 'stroke-width': 2.25, 'stroke-linejoin': 'round' }, svg);
+    svgEl('path', { d: da + `L${X(N - 1)} ${Y(0)}L${X(0)} ${Y(0)}Z`, fill: C.area }, svg);
+    if (cb) svgEl('path', { d: line(cb.total), fill: 'none', stroke: C.compare, 'stroke-width': 1.5, 'stroke-dasharray': '5 4' }, svg);
+    svgEl('path', { d: da, fill: 'none', stroke: C.ink, 'stroke-width': 2.25, 'stroke-linejoin': 'round' }, svg);
   }
   const i = CS.yi;
-  svgEl('line', { x1: X(i), x2: X(i), y1: pt, y2: H - pb, stroke: '#2747ff', 'stroke-width': 1.25 }, svg);
-  if (ca.total[i] != null) svgEl('circle', { cx: X(i), cy: Y(ca.total[i]), r: 4.5, fill: '#2747ff', stroke: '#fff', 'stroke-width': 2 }, svg);
-  if (cb && CS.mode === 'total' && cb.total[i] != null) svgEl('circle', { cx: X(i), cy: Y(cb.total[i]), r: 4, fill: '#868c95', stroke: '#fff', 'stroke-width': 2 }, svg);
+  svgEl('line', { x1: X(i), x2: X(i), y1: pt, y2: H - pb, stroke: C.hi, 'stroke-width': 1.25 }, svg);
+  if (ca.total[i] != null) svgEl('circle', { cx: X(i), cy: Y(ca.total[i]), r: 4.5, fill: C.hi, stroke: C.bg, 'stroke-width': 2 }, svg);
+  if (cb && CS.mode === 'total' && cb.total[i] != null) svgEl('circle', { cx: X(i), cy: Y(cb.total[i]), r: 4, fill: C.compare, stroke: C.bg, 'stroke-width': 2 }, svg);
   const hit = svgEl('rect', { x: pl, y: pt, width: W - pl - pr, height: H - pt - pb, fill: 'transparent', tabindex: 0, role: 'slider', 'aria-label': 'Year', 'aria-valuemin': ys[0], 'aria-valuemax': ys.at(-1), 'aria-valuenow': ys[i], style: 'cursor:ew-resize;outline:none' }, svg);
   const setI = x => { const ni = Math.max(0, Math.min(N - 1, Math.round((x - pl) / (W - pl - pr) * (N - 1)))); if (ni !== CS.yi) { CS.yi = ni; renderClimate(); } };
   svg.addEventListener('pointermove', ev => { const r = svg.getBoundingClientRect(); setI(ev.clientX - r.left); });
@@ -939,12 +993,31 @@ function renderClimate() {
   $('#c-sub').textContent = vi == null ? 'No data for this year.' : `${nf.format(Math.round(vi))} Mt CO₂e, against ${nf.format(Math.round(v0))} Mt in ${ys[f0]}.`;
   if (CS.mode === 'sector') {
     const s = sectors(CS.a, i);
-    $('#c-rows').innerHTML = SECT.map(([k, label, col]) => `<div class="r"><span><i class="sw" style="background:${col}"></i>${label}</span><span class="v">${nf.format(Math.round(s[k]))} Mt</span></div>`).join('');
+    $('#c-rows').innerHTML = SECT.map(([k, label, col]) => `<div class="r"><span><i class="sw" style="background:${C[col]}"></i>${label}</span><span class="v">${nf.format(Math.round(s[k]))} Mt</span></div>`).join('');
   } else if (cb) {
     const bv = cb.total[i], b0 = cb.total[cb.total.findIndex(v => v != null)];
     $('#c-rows').innerHTML = `<div class="r"><span>${cb.name}</span><span class="v">${bv == null ? '–' : nf.format(Math.round(bv)) + ' Mt'}</span></div><div class="r"><span style="color:var(--ink-3)">change since 1990</span><span class="v">${bv && b0 ? ((bv / b0 - 1) * 100).toFixed(1) + '%' : '–'}</span></div>`;
   } else $('#c-rows').innerHTML = '';
 }
+
+/* ------------------------------------------------------------------ theme: dark by default, light on request */
+const SUN = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.3M8 13.2v1.3M1.5 8h1.3M13.2 8h1.3M3.4 3.4l.9.9M11.7 11.7l.9.9M3.4 12.6l.9-.9M11.7 4.3l.9-.9"/></svg>';
+const MOON = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.6A5.6 5.6 0 0 1 6.4 2.5a5.6 5.6 0 1 0 7.1 7.1z"/></svg>';
+const themeBtn = $('#theme'), meta = document.querySelector('meta[name="theme-color"]');
+function syncTheme() {
+  const light = document.documentElement.dataset.theme === 'light';
+  themeBtn.innerHTML = light ? MOON : SUN;
+  themeBtn.setAttribute('aria-label', light ? 'Switch to dark mode' : 'Switch to light mode');
+  readTheme(); meta.setAttribute('content', C.bg);
+  renderGrid(); renderClimate();
+}
+themeBtn.addEventListener('click', () => {
+  const light = document.documentElement.dataset.theme !== 'light';
+  const apply = () => { if (light) document.documentElement.dataset.theme = 'light'; else delete document.documentElement.dataset.theme; syncTheme(); };
+  try { localStorage.setItem('theme', light ? 'light' : 'dark'); } catch (e) {}
+  if (document.startViewTransition && !reduce) document.startViewTransition(apply); else apply();
+});
+syncTheme();
 })();
 </script>
 </body>
