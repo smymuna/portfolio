@@ -19,7 +19,7 @@
   --hi:#7088ff; --hi-rgb:112,136,255; --hi-2:#aebaff; --hi-btn:#4f6bff; --hi-btn-hover:#6079ff; --hi-soft:rgba(112,136,255,.18);
   --clean:#3cc98e; --clean-soft:rgba(60,201,142,.13); --clean-edge:rgba(60,201,142,.45); --clean-btn:#3cc98e; --clean-btn-hover:#52d69e; --on-clean:#06150e;
   --debris:#ff7a52; --sat:#d6dae0; --sat-rb:#7f8792;
-  --earth:#13171c; --earth-edge:#242a32; --land:#3f4752; --grid:#1f242b; --area:rgba(112,136,255,.09); --compare:#8a919b;
+  --earth:#13171c; --earth-edge:#242a32; --land:#3f4752; --grid:#1f242b; --area:rgba(var(--hi-rgb),.09); --compare:#8a919b;
   --s1:#e2e8ff; --s2:#b3c1f6; --s3:#8399e4; --s4:#6077c6; --s5:#455798; --s6:#2b313d;
   --shadow:rgba(0,0,0,.5); --scroll:#3a404a;
   --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23a9afb8' stroke-width='1.6'%3E%3Cpath d='M3 4.5 6 7.5 9 4.5'/%3E%3C/svg%3E");
@@ -33,14 +33,15 @@
   --hi:#2747ff; --hi-rgb:39,71,255; --hi-2:#7a8cff; --hi-btn:#2747ff; --hi-btn-hover:#1c39e0; --hi-soft:#e9ecff;
   --clean:#0f7b55; --clean-soft:#e3f3ec; --clean-edge:#9fd3bd; --clean-btn:#0f7b55; --clean-btn-hover:#0c6847; --on-clean:#ffffff;
   --debris:#e4572e; --sat:#15181d; --sat-rb:#7a818b;
-  --earth:#f1f3f5; --earth-edge:#dde1e6; --land:#8e97a3; --grid:#eceef0; --area:#eef2f7; --compare:#868c95;
+  --earth:#f1f3f5; --earth-edge:#dde1e6; --land:#8e97a3; --grid:#eceef0; --area:rgba(var(--hi-rgb),.07); --compare:#868c95;
   --s1:#1f3550; --s2:#3c5a7d; --s3:#6584a8; --s4:#93acc8; --s5:#bfd0e2; --s6:#e3e9f0;
   --shadow:rgba(17,19,22,.08); --scroll:#c9cdd3;
   --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23515760' stroke-width='1.6'%3E%3Cpath d='M3 4.5 6 7.5 9 4.5'/%3E%3C/svg%3E");
   color-scheme:light;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scrollbar-color:var(--scroll) transparent}
+html{scrollbar-color:var(--scroll) transparent;overflow-x:clip}
+body{overflow-x:clip}
 body{background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 var(--sans);-webkit-font-smoothing:antialiased}
 ::selection{background:var(--hi-soft)}
 :focus-visible{outline:2px solid var(--hi);outline-offset:2px;border-radius:6px}
@@ -174,6 +175,95 @@ h2{font:600 clamp(2rem,3.6vw,2.75rem)/1.05 var(--display);letter-spacing:-.03em}
 .band:focus-visible{outline:none}
 .band:focus-visible rect.b{stroke:var(--hi);stroke-width:2}
 
+/* more projects */
+.more-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:3.5rem;align-items:start}
+.more-grid h3{font:600 1.6rem/1.15 var(--display);letter-spacing:-.02em}
+.more-grid .desc{margin-top:.5rem;color:var(--ink-2);text-wrap:pretty}
+.more-grid .meta{display:flex;flex-wrap:wrap;gap:.35rem 1.25rem;margin-top:.8rem;font-size:.9375rem;color:var(--ink-3)}
+.more-grid .meta a{color:var(--ink);font-weight:500}
+.agents{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.4rem;margin-top:1.4rem;position:relative}
+.agent{position:relative;border:1px solid var(--rule);border-radius:12px;padding:.7rem .6rem;background:var(--surface);font-size:.8125rem;line-height:1.25;color:var(--ink-2);transition:border-color .25s ease,background-color .25s ease,color .25s ease}
+.agent b{display:block;font-weight:600;color:var(--ink);font-size:.875rem}
+.agent i{display:block;width:8px;height:8px;border-radius:50%;background:var(--rule-2);margin-bottom:.5rem;transition:background-color .25s ease,box-shadow .25s ease}
+.agent.run{border-color:var(--hi);background:var(--hi-soft)}
+.agent.run i{background:var(--hi);box-shadow:0 0 0 4px var(--hi-soft)}
+.agent.ok i{background:var(--clean)}
+.agent:not(:last-child)::after{content:"";position:absolute;right:-.42rem;top:50%;width:.42rem;height:1px;background:var(--rule-2)}
+.log{margin-top:1rem;min-height:9.5rem;border:1px solid var(--rule);border-radius:12px;padding:.8rem 1rem;background:var(--soft);font:400 .8125rem/1.7 var(--mono);color:var(--ink-2);overflow:hidden}
+.log p{white-space:pre-wrap}
+.log .ok{color:var(--clean)}
+.log .hd{color:var(--hi)}
+.runrow{display:flex;align-items:center;gap:.75rem;margin-top:1rem;flex-wrap:wrap}
+.runrow .hint{font-size:.8125rem;color:var(--ink-3)}
+.model{position:relative;margin-top:1.4rem;height:17rem}
+.model svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.coll{position:absolute;transform:translate(-50%,-50%);border:1px solid var(--rule);background:var(--surface);border-radius:999px;padding:.4rem .8rem;font-size:.8125rem;font-weight:500;color:var(--ink-2);cursor:pointer;white-space:nowrap;transition:border-color .2s ease,color .2s ease,background-color .2s ease,opacity .2s ease}
+.coll:hover,.coll[aria-pressed="true"]{border-color:var(--hi);color:var(--ink);background:var(--hi-soft)}
+.model.focus .coll:not([aria-pressed="true"]):not(.rel){opacity:.35}
+.coll.rel{border-color:var(--hi);color:var(--ink)}
+.model .edge{stroke:var(--rule-2);stroke-width:1.25;transition:stroke .2s ease,opacity .2s ease}
+.model.focus .edge{opacity:.25}
+.model.focus .edge.on{stroke:var(--hi);opacity:1;stroke-width:1.75}
+.model-note{margin-top:.6rem;min-height:3.2rem;font-size:.875rem;color:var(--ink-2)}
+@media (max-width:900px){ .more-grid{grid-template-columns:1fr;gap:4rem} .agents{grid-template-columns:repeat(3,minmax(0,1fr))} .agent:nth-child(3)::after{display:none} .model{height:19rem} }
+/* Scenes: each project has its own colour world; the page fades between them while scrolling.
+   Registering the properties lets the browser animate the variables themselves. */
+@property --bg{syntax:'<color>';inherits:true;initial-value:#0c0e11}
+@property --hi{syntax:'<color>';inherits:true;initial-value:#7088ff}
+@property --hi-btn{syntax:'<color>';inherits:true;initial-value:#4f6bff}
+@property --hi-btn-hover{syntax:'<color>';inherits:true;initial-value:#6079ff}
+@property --hi-soft{syntax:'<color>';inherits:true;initial-value:rgba(112,136,255,.18)}
+:root{transition:--bg .9s ease,--hi .9s ease,--hi-btn .9s ease,--hi-btn-hover .9s ease,--hi-soft .9s ease}
+:root[data-scene="grid"]{--bg:#0a110e;--bg-rgb:10,17,14;--hi:#3ccf8e;--hi-rgb:60,207,142;--hi-btn:#2fb97c;--hi-btn-hover:#3fcb8b;--hi-soft:rgba(60,207,142,.15)}
+:root[data-scene="climate"]{--bg:#120f0a;--bg-rgb:18,15,10;--hi:#f2a541;--hi-rgb:242,165,65;--hi-btn:#d9892a;--hi-btn-hover:#e99a3a;--hi-soft:rgba(242,165,65,.15)}
+:root[data-scene="agent"]{--bg:#100d16;--bg-rgb:16,13,22;--hi:#a78bfa;--hi-rgb:167,139,250;--hi-btn:#8b6cf0;--hi-btn-hover:#9a7ff5;--hi-soft:rgba(167,139,250,.16)}
+:root[data-scene="pet"]{--bg:#140e0d;--bg-rgb:20,14,13;--hi:#ff9a7a;--hi-rgb:255,154,122;--hi-btn:#e57a5a;--hi-btn-hover:#f08b6b;--hi-soft:rgba(255,154,122,.15)}
+:root[data-theme="light"][data-scene="grid"]{--bg:#f2faf6;--bg-rgb:242,250,246;--hi:#0f7b55;--hi-rgb:15,123,85;--hi-btn:#0f7b55;--hi-btn-hover:#0c6847;--hi-soft:#dff2e9}
+:root[data-theme="light"][data-scene="climate"]{--bg:#fcf7ef;--bg-rgb:252,247,239;--hi:#b5650d;--hi-rgb:181,101,13;--hi-btn:#b5650d;--hi-btn-hover:#9a560b;--hi-soft:#f8ead6}
+:root[data-theme="light"][data-scene="agent"]{--bg:#f7f4fe;--bg-rgb:247,244,254;--hi:#6d4ad8;--hi-rgb:109,74,216;--hi-btn:#6d4ad8;--hi-btn-hover:#5b3cc0;--hi-soft:#ece5fd}
+:root[data-theme="light"][data-scene="pet"]{--bg:#fdf5f2;--bg-rgb:253,245,242;--hi:#c2502c;--hi-rgb:194,80,44;--hi-btn:#c2502c;--hi-btn-hover:#a94423;--hi-soft:#fbe4db}
+section.proj{position:relative}
+.scene-art{position:absolute;pointer-events:none;z-index:0}
+section.proj > :not(.scene-art){position:relative;z-index:1}
+/* GridShift: current flowing along power lines */
+.flow{left:-1.5rem;right:-1.5rem;top:2.5rem;height:9rem;width:auto;opacity:.55}
+.flow path{fill:none;stroke:var(--hi);stroke-width:1.25;stroke-dasharray:2 14;stroke-linecap:round;animation:flow 2.4s linear infinite}
+.flow path.base{stroke:var(--rule);stroke-dasharray:none;animation:none}
+.flow path:nth-of-type(4){animation-duration:3.1s}.flow path:nth-of-type(6){animation-duration:1.9s}
+@keyframes flow{to{stroke-dashoffset:-32}}
+/* Climate: one stripe per year, darker = more emissions */
+.stripes{display:flex;height:4.5rem;border-radius:10px;overflow:hidden;margin:0 0 2.25rem}
+.stripes i{flex:1;background:rgba(var(--hi-rgb),var(--a));transition:background-color .6s ease}
+.stripes-cap{display:flex;justify-content:space-between;margin:-1.75rem 0 2.25rem;font:400 .75rem var(--mono);color:var(--ink-3)}
+/* Agentic AI: a drifting network of agents */
+.net{right:-1.5rem;top:0;width:min(46rem,60%);height:100%;opacity:.9}
+/* Pet adoption: a warm glow */
+.glow{right:-8rem;top:2rem;width:38rem;height:38rem;border-radius:50%;background:radial-gradient(closest-side,rgba(var(--hi-rgb),.16),transparent);filter:blur(10px)}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:3.5rem;align-items:start}
+@media (max-width:900px){ .net{width:100%;opacity:.45} .split{grid-template-columns:1fr;gap:2rem} .glow{right:-12rem;width:26rem;height:26rem} }
+@media (prefers-reduced-motion:reduce){ .flow path{animation:none} :root{transition:none} }
+/* footer: the "Currently" board */
+.now{border:1px solid var(--rule);border-radius:16px;background:var(--surface);padding:1.25rem 1.35rem}
+.now-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:.4rem}
+.now h3{font:600 1.25rem var(--display);letter-spacing:-.01em}
+.live{display:inline-flex;align-items:center;gap:.45rem;font-size:.75rem;color:var(--ink-3)}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--clean);box-shadow:0 0 0 0 rgba(60,201,142,.5);animation:livepulse 2.2s ease-out infinite}
+@keyframes livepulse{to{box-shadow:0 0 0 7px rgba(60,201,142,0)}}
+.now-list{list-style:none;margin:0}
+.now-list li{display:grid;grid-template-columns:8.5rem minmax(0,1fr);gap:1rem;padding:.8rem .5rem;margin:0 -.5rem;border-bottom:1px solid var(--rule);border-radius:8px;transition:background-color .15s ease}
+.now-list li:last-child{border-bottom:0}
+.now-list li:hover{background:var(--soft)}
+.now-list .k{font:500 .75rem/1.9 var(--mono);color:var(--ink-3);text-transform:none}
+.now-list .v{color:var(--ink);font-size:.9688rem;line-height:1.45}
+.now-list small{display:block;margin-top:.15rem;font-size:.8125rem;color:var(--ink-3)}
+.now-list .lvl{display:flex;align-items:center;gap:.6rem}
+.track{display:inline-block;width:7rem;height:5px;border-radius:3px;background:var(--rule);overflow:hidden}
+.track i{display:block;height:100%;background:var(--hi);transform-origin:left;transform:scaleX(0);transition:transform 1.2s var(--ease-out) .2s}
+.now.seen .track i{transform:scaleX(var(--to))}
+.now-list cite{font-style:italic}
+#now-clock{color:var(--ink);font-size:.9375rem}
+@media (max-width:900px){ .now-list li{grid-template-columns:1fr;gap:.1rem} }
+@media (prefers-reduced-motion:reduce){ .live i{animation:none} .track i{transition:none} }
 footer{padding:7rem 0 5rem;border-top:1px solid var(--rule);margin-top:5rem}
 footer .grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
 footer h2{max-width:28rem}
@@ -211,7 +301,7 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
 </head>
 <body>
 
-<header class="hero" id="top">
+<header class="hero" id="top" data-scene="orbit">
   <div class="wrap">
     <nav>
       <a class="me" href="#top">Mymuna Sultana</a>
@@ -287,7 +377,7 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
 
 <main class="wrap">
 
-  <section class="proj" id="orbitwatch" style="padding-top:5rem">
+  <section class="proj" id="orbitwatch" data-scene="orbit" style="padding-top:5rem">
     <div class="head">
       <div>
         <h2>OrbitWatch</h2>
@@ -297,7 +387,12 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
     </div>
   </section>
 
-  <section class="proj" id="gridshift">
+  <section class="proj" id="gridshift" data-scene="grid">
+    <svg class="scene-art flow" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true">
+      <path class="base" d="M0 30 C200 10 400 50 600 30 S1000 10 1200 30"/><path d="M0 30 C200 10 400 50 600 30 S1000 10 1200 30"/>
+      <path class="base" d="M0 70 C250 95 450 45 700 70 S1050 95 1200 70"/><path d="M0 70 C250 95 450 45 700 70 S1050 95 1200 70"/>
+      <path class="base" d="M0 110 C180 90 420 130 640 110 S980 90 1200 110"/><path d="M0 110 C180 90 420 130 640 110 S980 90 1200 110"/>
+    </svg>
     <div class="head">
       <div>
         <h2>GridShift</h2>
@@ -327,7 +422,7 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
     </div>
   </section>
 
-  <section class="proj" id="climate">
+  <section class="proj" id="climate" data-scene="climate">
     <div class="head">
       <div>
         <h2>Climate Emissions Platform</h2>
@@ -335,6 +430,8 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
         <div class="meta"><span>FastAPI · PostgreSQL · React</span><span>52 tests</span><a href="https://github.com/smymuna/climate-emissions-platform">Repository</a><a href="#">Case study</a></div>
       </div>
     </div>
+    <div class="stripes" id="stripes" role="img" aria-label="Emissions stripes"></div>
+    <div class="stripes-cap"><span>1990</span><span id="stripes-label">one stripe per year · stronger colour means more emissions</span><span>2024</span></div>
     <div class="controls">
       <div><label class="lbl" for="c-a">Country</label><select id="c-a"></select></div>
       <div><label class="lbl" for="c-b">Compare with</label><select id="c-b"></select></div>
@@ -355,7 +452,37 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
     </div>
   </section>
 
-  <footer>
+
+  <section class="proj" id="agentic" data-scene="agent">
+    <canvas class="scene-art net" id="net" aria-hidden="true"></canvas>
+    <div class="split">
+      <div>
+        <h2>Agentic AI data quality pipeline</h2>
+        <p class="desc" style="margin-top:.75rem;color:var(--ink-2);font-size:1.125rem;line-height:1.5">Six LangGraph agents profile, score and monitor Azure Synapse tables, then explain what went wrong. Results are stored in PostgreSQL and shown in a React dashboard.</p>
+        <div class="head" style="margin:0"><div><div class="meta"><span>LangGraph · FastAPI · PostgreSQL · React · Azure · Docker</span><a href="https://github.com/smymuna/agentic-ai">Repository</a></div></div></div>
+        <div class="runrow"><button class="btn blue" id="run-agents">Run the agents</button><span class="hint">One run on <span class="mono">dbo.CustomerDetails</span>, the table from the project's README</span></div>
+      </div>
+      <div>
+        <div class="agents" id="agents"></div>
+        <div class="log" id="agent-log" aria-live="polite"><p>Press "Run the agents" to step through a pipeline run.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="proj" id="pets" data-scene="pet">
+    <div class="scene-art glow" aria-hidden="true"></div>
+    <div class="split">
+      <div>
+        <h2>Pet Adoption &amp; Shelter Management</h2>
+        <p class="desc" style="margin-top:.75rem;color:var(--ink-2);font-size:1.125rem;line-height:1.5">A full-stack shelter system: CRUD for 6 MongoDB collections, search, skill-based volunteer matching, and a Bootstrap admin dashboard with Chart.js analytics.</p>
+        <div class="head" style="margin:0"><div><div class="meta"><span>FastAPI · MongoDB · Bootstrap 5 · Chart.js</span><a href="https://github.com/smymuna/pet-adoption-system">Repository</a></div></div></div>
+        <p class="model-note" id="model-note" style="margin-top:1.5rem">Click a collection to see what it connects to.</p>
+      </div>
+      <div class="model" id="model" aria-label="Data model: click a collection to see what it connects to"></div>
+    </div>
+  </section>
+
+  <footer data-scene="orbit">
     <div class="grid">
       <div>
         <h2>Open to software and data engineering roles.</h2>
@@ -365,20 +492,16 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
           <a class="btn" href="https://github.com/smymuna">GitHub</a>
         </div>
       </div>
-      <div>
-        <p style="color:var(--ink-3);font-size:.9375rem">Being built next</p>
-        <ul>
-          <li>Real-time crypto market stream <span>Kafka</span></li>
-          <li>Two data analysis projects <span>planned</span></li>
+      <section class="now" aria-labelledby="now-h">
+        <div class="now-head"><h3 id="now-h">Currently</h3><span class="live"><i></i>updated October 2026</span></div>
+        <ul class="now-list">
+          <li><span class="k">Working</span><span class="v">Software Developer at Mason LIFE, George Mason University<small>since December 2025</small></span></li>
+          <li><span class="k">Learning</span><span class="v">German<small class="lvl"><span class="track" title="A1 on the A1–C2 scale"><i style="--to:.167"></i></span>A1 · beginner</small></span></li>
+          <li><span class="k">Time</span><span class="v"><span id="now-clock" class="mono">–</span><small>Fairfax, Virginia · interviews in CET</small></span></li>
+          <li><span class="k">Reading</span><span class="v"><cite>A Thousand Splendid Suns</cite><small>Khaled Hosseini</small></span></li>
+          <li><span class="k">Off the keyboard</span><span class="v">Cooking and travelling</span></li>
         </ul>
-        <p style="color:var(--ink-3);font-size:.9375rem;margin-top:2rem">Before</p>
-        <ul>
-          <li>Software Developer, Mason LIFE, George Mason University <span>2025–</span></li>
-          <li>M.S. Computer Science, George Mason University <span>2025</span></li>
-          <li>Data Engineer Intern, DQLabs <span>2025</span></li>
-          <li>B.Tech Computer Science, Kakatiya University <span>2021</span></li>
-        </ul>
-      </div>
+      </section>
     </div>
   </footer>
 </main>
@@ -984,6 +1107,11 @@ function renderClimate() {
   svg.addEventListener('pointermove', ev => { const r = svg.getBoundingClientRect(); setI(ev.clientX - r.left); });
   svg.addEventListener('pointerdown', ev => { const r = svg.getBoundingClientRect(); setI(ev.clientX - r.left); });
   hit.addEventListener('keydown', ev => { const d = { ArrowLeft: -1, ArrowRight: 1 }[ev.key]; if (!d) return; ev.preventDefault(); CS.yi = Math.max(0, Math.min(N - 1, CS.yi + d)); renderClimate(); $('#c-chart rect[role=slider]').focus(); });
+  // stripes: one per year, opacity scaled between the country's lowest and highest year
+  const tv = ca.total.filter(v => v != null), lo = Math.min(...tv), hi = Math.max(...tv);
+  $('#stripes').innerHTML = ca.total.map((v, k) => `<i title="${ys[k]}: ${v == null ? 'no data' : nf.format(Math.round(v)) + ' Mt'}" style="--a:${v == null ? 0 : (.12 + .88 * (v - lo) / (hi - lo || 1)).toFixed(3)}"></i>`).join('');
+  $('#stripes').setAttribute('aria-label', `Emissions stripes for ${ca.name}, 1990 to 2024: stronger colour means higher emissions`);
+  $('#stripes-label').textContent = `${ca.name} · one stripe per year · stronger colour means more emissions`;
   // readout
   const f0 = ca.total.findIndex(v => v != null), v0 = ca.total[f0], vi = ca.total[i];
   const ch = vi != null && v0 ? (vi / v0 - 1) * 100 : null;
@@ -999,6 +1127,130 @@ function renderClimate() {
     $('#c-rows').innerHTML = `<div class="r"><span>${cb.name}</span><span class="v">${bv == null ? '–' : nf.format(Math.round(bv)) + ' Mt'}</span></div><div class="r"><span style="color:var(--ink-3)">change since 1990</span><span class="v">${bv && b0 ? ((bv / b0 - 1) * 100).toFixed(1) + '%' : '–'}</span></div>`;
   } else $('#c-rows').innerHTML = '';
 }
+
+
+/* ------------------------------------------------------------------ more projects */
+const AGENTS = [
+  ['Planner', 'plans the run', 'Planner agent: chooses the checks to run for this table'],
+  ['Metadata', 'reads the schema', 'Metadata agent: extracts the table schema and metadata'],
+  ['Metrics', 'measures quality', 'Metrics agent: computes null percentages and distinctness per column'],
+  ['Scoring', 'scores it', 'Scoring agent: scores each metric against its thresholds'],
+  ['RCA', 'finds causes', 'RCA agent: runs root cause analysis on anything that failed'],
+  ['Issue', 'logs issues', 'Issue agent: logs and categorises the issues it found'],
+];
+const agentsEl = $('#agents'), logEl = $('#agent-log');
+agentsEl.innerHTML = AGENTS.map(([n, t]) => `<div class="agent"><i></i><b>${n}</b>${t}</div>`).join('');
+let agentRun = 0;
+$('#run-agents').addEventListener('click', () => {
+  const id = ++agentRun, cards = [...agentsEl.children], step = reduce ? 0 : 650;
+  cards.forEach(c => c.classList.remove('run', 'ok'));
+  logEl.innerHTML = '<p class="hd">POST /trigger  {"table_name": "dbo.CustomerDetails", "task_type": "profiling"}</p>';
+  AGENTS.forEach((a, k) => setTimeout(() => {
+    if (id !== agentRun) return;
+    if (k) { cards[k - 1].classList.remove('run'); cards[k - 1].classList.add('ok'); }
+    cards[k].classList.add('run');
+    logEl.insertAdjacentHTML('beforeend', `<p>→ ${a[2]}</p>`);
+  }, k * step));
+  setTimeout(() => {
+    if (id !== agentRun) return;
+    cards.at(-1).classList.remove('run'); cards.at(-1).classList.add('ok');
+    logEl.insertAdjacentHTML('beforeend', '<p class="ok">✓ Run stored in PostgreSQL: GET /runs, /metrics/{run_id}, /rca/{run_id}</p>');
+  }, AGENTS.length * step);
+});
+
+const COLLS = {
+  animals: { label: 'Animals', x: 50, y: 42, note: 'Animals: species, breed, age and status. The centre of the system, and the source for most dashboard charts.' },
+  adopters: { label: 'Adopters', x: 14, y: 14, note: 'Adopters: people applying to adopt. Searchable by name, linked to their adoptions.' },
+  adoptions: { label: 'Adoptions', x: 16, y: 72, note: 'Adoptions: join an adopter to an animal. Feed the monthly trend and adoption rate by species charts.' },
+  medical: { label: 'Medical records', x: 84, y: 14, note: 'Medical records: visits per animal. Feed the medical visits over time and by species charts.' },
+  volunteers: { label: 'Volunteers', x: 84, y: 72, note: 'Volunteers: matched to animals by skill (18 standard skill types), assigned or unassigned.' },
+  activities: { label: 'Volunteer activities', x: 66, y: 96, note: 'Volunteer activities: what each volunteer did. Powers the volunteer statistics.' },
+};
+const EDGES = [['adopters', 'adoptions'], ['adoptions', 'animals'], ['medical', 'animals'], ['volunteers', 'animals'], ['activities', 'volunteers']];
+const model = $('#model');
+const msvg = svgEl('svg', { 'aria-hidden': 'true' }, model);
+function layoutModel() {
+  const W = model.clientWidth, H = model.clientHeight; msvg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  msvg.innerHTML = '';
+  EDGES.forEach(([a, b]) => svgEl('line', { class: 'edge', 'data-a': a, 'data-b': b, x1: COLLS[a].x / 100 * W, y1: COLLS[a].y / 100 * H * .9, x2: COLLS[b].x / 100 * W, y2: COLLS[b].y / 100 * H * .9 }, msvg));
+  model.querySelectorAll('.coll').forEach(el => { const c = COLLS[el.dataset.k]; el.style.left = c.x + '%'; el.style.top = (c.y * .9) + '%'; });
+  focusColl(model.dataset.sel);
+}
+Object.entries(COLLS).forEach(([k, c]) => {
+  const b = document.createElement('button'); b.className = 'coll'; b.dataset.k = k; b.textContent = c.label; b.setAttribute('aria-pressed', 'false');
+  b.addEventListener('click', () => focusColl(model.dataset.sel === k ? '' : k));
+  model.appendChild(b);
+});
+function focusColl(k) {
+  model.dataset.sel = k || '';
+  model.classList.toggle('focus', !!k);
+  const rel = new Set(); EDGES.forEach(([a, b]) => { if (a === k) rel.add(b); if (b === k) rel.add(a); });
+  model.querySelectorAll('.coll').forEach(el => { el.setAttribute('aria-pressed', el.dataset.k === k); el.classList.toggle('rel', rel.has(el.dataset.k)); });
+  msvg.querySelectorAll('.edge').forEach(e => e.classList.toggle('on', e.dataset.a === k || e.dataset.b === k));
+  $('#model-note').textContent = k ? COLLS[k].note : 'Click a collection to see what it connects to.';
+}
+layoutModel(); new ResizeObserver(layoutModel).observe(model);
+
+
+/* ------------------------------------------------------------------ scenes: re-colour the page per project */
+const sceneEls = [...document.querySelectorAll('[data-scene]')];
+let scene = 'orbit', sceneTimer;
+const sceneIO = new IntersectionObserver(es => {
+  // the section crossing the middle of the screen sets the scene
+  es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const next = e.target.dataset.scene; if (next === scene) return;
+    scene = next; document.documentElement.dataset.scene = next;
+    clearTimeout(sceneTimer);
+    sceneTimer = setTimeout(() => { readTheme(); meta.setAttribute('content', C.bg); renderGrid(); renderClimate(); }, reduce ? 0 : 950);
+  });
+}, { rootMargin: '-48% 0px -48% 0px' });
+sceneEls.forEach(el => sceneIO.observe(el));
+
+/* the agent network behind the Agentic AI section */
+const net = $('#net'), nctx = net.getContext('2d'), NODES = [];
+let pulses = [], netOn = false;
+function netSize() {
+  const r = net.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2);
+  net.width = r.width * d; net.height = r.height * d; nctx.setTransform(d, 0, 0, d, 0, 0);
+  if (!NODES.length) for (let k = 0; k < 34; k++) NODES.push({ x: Math.random(), y: Math.random(), vx: (Math.random() - .5) * .00004, vy: (Math.random() - .5) * .00004 });
+}
+function netFrame(t) {
+  if (!netOn) return;
+  const W = net.clientWidth, H = net.clientHeight, rgb = getComputedStyle(document.documentElement).getPropertyValue('--hi-rgb').trim();
+  nctx.clearRect(0, 0, W, H);
+  NODES.forEach(n => { if (!reduce) { n.x += n.vx * 16; n.y += n.vy * 16; } if (n.x < 0 || n.x > 1) n.vx *= -1; if (n.y < 0 || n.y > 1) n.vy *= -1; });
+  const links = [];
+  for (let a = 0; a < NODES.length; a++) for (let b = a + 1; b < NODES.length; b++) {
+    const dx = (NODES[a].x - NODES[b].x) * W, dy = (NODES[a].y - NODES[b].y) * H, d = Math.hypot(dx, dy);
+    if (d < 150) { links.push([a, b]); nctx.strokeStyle = `rgba(${rgb},${.22 * (1 - d / 150)})`; nctx.lineWidth = 1; nctx.beginPath(); nctx.moveTo(NODES[a].x * W, NODES[a].y * H); nctx.lineTo(NODES[b].x * W, NODES[b].y * H); nctx.stroke(); }
+  }
+  NODES.forEach(n => { nctx.fillStyle = `rgba(${rgb},.55)`; nctx.beginPath(); nctx.arc(n.x * W, n.y * H, 2.2, 0, Math.PI * 2); nctx.fill(); });
+  if (!reduce && links.length && Math.random() < .03) pulses.push({ l: links[Math.floor(Math.random() * links.length)], t: 0 });
+  pulses = pulses.filter(p => p.t <= 1);
+  pulses.forEach(p => { const [a, b] = p.l, A = NODES[a], B = NODES[b]; p.t += .018;
+    nctx.fillStyle = `rgba(${rgb},${1 - p.t * .5})`; nctx.beginPath(); nctx.arc((A.x + (B.x - A.x) * p.t) * W, (A.y + (B.y - A.y) * p.t) * H, 3, 0, Math.PI * 2); nctx.fill(); });
+  requestAnimationFrame(netFrame);
+}
+netSize(); addEventListener('resize', netSize);
+new IntersectionObserver(es => { const v = es[0].isIntersecting; if (v && !netOn) { netOn = true; requestAnimationFrame(netFrame); } else if (!v) netOn = false; }).observe(net);
+// a burst of activity across the network while the agents run
+$('#run-agents').addEventListener('click', () => {
+  if (reduce) return;
+  for (let k = 0; k < 40; k++) setTimeout(() => {
+    const a = Math.floor(Math.random() * NODES.length), b = Math.floor(Math.random() * NODES.length);
+    if (a !== b) pulses.push({ l: [a, b], t: 0 });
+  }, k * 95);
+});
+
+
+/* ------------------------------------------------------------------ footer: "Currently" board */
+const nowClock = $('#now-clock');
+const fmtFx = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hour12: false });
+const fmtCet = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit', hour12: false });
+const tick = () => { const d = new Date(); nowClock.textContent = `${fmtFx.format(d)} in Fairfax · ${fmtCet.format(d)} CET`; };
+tick(); setInterval(tick, 15000);
+new IntersectionObserver((es, io) => { if (es[0].isIntersecting) { $('.now').classList.add('seen'); io.disconnect(); } }, { threshold: .4 }).observe($('.now'));
 
 /* ------------------------------------------------------------------ theme: dark by default, light on request */
 const SUN = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.3M8 13.2v1.3M1.5 8h1.3M13.2 8h1.3M3.4 3.4l.9.9M11.7 11.7l.9.9M3.4 12.6l.9-.9M11.7 4.3l.9-.9"/></svg>';
