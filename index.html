@@ -86,8 +86,7 @@ select:hover{border-color:var(--rule-2)}
 .hero canvas.pointing{cursor:pointer}
 .hero .wrap{position:relative;min-height:max(100svh,760px);display:flex;flex-direction:column;padding-top:clamp(6rem,12vh,8rem);padding-bottom:2.25rem;pointer-events:none}
 .hero .wrap > *{pointer-events:auto}
-nav{position:absolute;top:0;left:1.5rem;right:1.5rem;height:4.5rem;display:flex;align-items:center;gap:1.6rem;font-size:.9375rem;color:var(--ink-2)}
-nav .me{margin-right:auto;font:600 1rem var(--display);color:var(--ink);text-decoration:none;white-space:nowrap}
+nav{position:absolute;top:0;left:1.5rem;right:1.5rem;height:4.5rem;display:flex;align-items:center;justify-content:flex-end;gap:1.6rem;font-size:.9375rem;color:var(--ink-2)}
 nav a{text-decoration:none}nav a:hover{color:var(--ink)}
 .intro{max-width:36rem}
 h1{font:600 clamp(2.75rem,4.8vw,4.4rem)/.95 var(--display);letter-spacing:-.04em;white-space:nowrap}
@@ -264,13 +263,24 @@ section.proj > :not(.scene-art){position:relative;z-index:1}
 #now-clock{color:var(--ink);font-size:.9375rem}
 @media (max-width:900px){ .now-list li{grid-template-columns:1fr;gap:.1rem} }
 @media (prefers-reduced-motion:reduce){ .live i{animation:none} .track i{transition:none} }
-footer{padding:7rem 0 5rem;border-top:1px solid var(--rule);margin-top:5rem}
+footer{padding:7rem 0 2.5rem;border-top:1px solid var(--rule);margin-top:5rem}
 footer .grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
 footer h2{max-width:28rem}
 footer ul{list-style:none;margin-top:1rem;color:var(--ink-2)}
 footer li{padding:.4rem 0;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;gap:1rem}
 footer li span{color:var(--ink-3);font-size:.875rem}
 footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
+.signoff{position:relative;margin-top:6rem;padding-top:2.5rem;border-top:1px solid var(--rule)}
+.thanks{position:relative;font:600 clamp(4.5rem,15.5vw,13.5rem)/.88 var(--display);letter-spacing:-.055em;padding-bottom:.08em;
+  /* shading: solid at the top, fading into the page, with a soft light that follows the pointer */
+  background:radial-gradient(26rem circle at var(--mx,22%) var(--my,30%),var(--hi),transparent 70%),
+             linear-gradient(180deg,var(--ink) 18%,color-mix(in srgb,var(--ink) 12%,var(--bg)) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;user-select:none}
+.thanks .dot{-webkit-text-fill-color:var(--hi);color:var(--hi)}
+.signoff::before{content:"";position:absolute;left:var(--mx,22%);top:var(--my,30%);width:30rem;height:16rem;transform:translate(-50%,-30%);
+  background:radial-gradient(closest-side,rgba(var(--hi-rgb),.14),transparent);filter:blur(20px);pointer-events:none;transition:left .25s var(--ease-out),top .25s var(--ease-out)}
+.legal{position:relative;display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-between;align-items:center;margin-top:2rem;font-size:.8125rem;color:var(--ink-3)}
+.legal a{color:var(--ink-2);text-decoration:none}.legal a:hover{color:var(--ink)}
 
 [hidden]{display:none!important}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -279,7 +289,7 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
   .hero{min-height:0;overflow:visible}
   .hero .wrap{min-height:0;display:block;padding-top:5.5rem;padding-bottom:0}
   h1{white-space:normal}
-  nav{gap:1.1rem} nav a[href="#orbitwatch"]{display:none}
+  nav{gap:1.1rem}
   .jcard{min-height:0}
   .intro{position:static}
   .hero canvas{position:relative;display:block;height:min(78vw,30rem);margin-top:1.5rem}
@@ -304,7 +314,6 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
 <header class="hero" id="top" data-scene="orbit">
   <div class="wrap">
     <nav>
-      <a class="me" href="#top">Mymuna Sultana</a>
       <a href="#orbitwatch">Work</a><a href="#">CV</a><a href="https://github.com/smymuna">GitHub</a><a href="mailto:mymuna.gmu@gmail.com">Email</a>
       <button class="icon theme" id="theme" aria-label="Switch to light mode"></button>
     </nav>
@@ -502,6 +511,14 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
           <li><span class="k">Off the keyboard</span><span class="v">Cooking and travelling</span></li>
         </ul>
       </section>
+    </div>
+    <div class="signoff" id="signoff">
+      <p class="thanks">Thank you<span class="dot">.</span></p>
+      <div class="legal">
+        <span>© 2026 Mymuna Sultana. All rights reserved.</span>
+        <span>Data from OrbitWatch, Energy-Charts and Eurostat</span>
+        <a href="#top">Back to top ↑</a>
+      </div>
     </div>
   </footer>
 </main>
@@ -1251,6 +1268,15 @@ const fmtCet = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Berlin', hou
 const tick = () => { const d = new Date(); nowClock.textContent = `${fmtFx.format(d)} in Fairfax · ${fmtCet.format(d)} CET`; };
 tick(); setInterval(tick, 15000);
 new IntersectionObserver((es, io) => { if (es[0].isIntersecting) { $('.now').classList.add('seen'); io.disconnect(); } }, { threshold: .4 }).observe($('.now'));
+
+
+/* sign-off: the light on "Thank you" follows the pointer */
+const signoff = $('#signoff');
+if (!reduce) signoff.addEventListener('pointermove', e => {
+  const r = signoff.getBoundingClientRect();
+  signoff.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+  signoff.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+});
 
 /* ------------------------------------------------------------------ theme: dark by default, light on request */
 const SUN = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.3M8 13.2v1.3M1.5 8h1.3M13.2 8h1.3M3.4 3.4l.9.9M11.7 11.7l.9.9M3.4 12.6l.9-.9M11.7 4.3l.9-.9"/></svg>';
