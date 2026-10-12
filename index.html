@@ -81,27 +81,34 @@ select{appearance:none;font:500 .9375rem var(--sans);color:var(--ink);height:2.5
 select:hover{border-color:var(--rule-2)}
 .lbl{display:block;font-size:.8125rem;color:var(--ink-3);margin-bottom:.4rem}
 
-/* hero */
-.hero{position:relative;min-height:max(100svh,760px);overflow:hidden}
-.hero canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:pan-y;cursor:grab}
-.hero canvas.dragging{cursor:grabbing}
-.hero canvas.pointing{cursor:pointer}
-.hero .wrap{position:relative;min-height:max(100svh,760px);display:flex;flex-direction:column;padding-top:clamp(6rem,12vh,8rem);padding-bottom:2.25rem;pointer-events:none}
+/* hero — tall runway + sticky pin so the left intro can morph on scroll without moving the globe */
+.hero{position:relative;height:175vh}
+.hero-pin{position:sticky;top:0;height:100svh;min-height:760px;overflow:hidden}
+.hero-pin canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:pan-y;cursor:grab}
+.hero-pin canvas.dragging{cursor:grabbing}
+.hero-pin canvas.pointing{cursor:pointer}
+.hero .wrap{position:relative;height:100%;display:flex;flex-direction:column;padding-top:clamp(5.25rem,10vh,6.75rem);padding-bottom:1.5rem;pointer-events:none;min-height:0}
 .hero .wrap > *{pointer-events:auto}
 nav{position:absolute;top:0;left:1.5rem;right:1.5rem;height:4.5rem;display:flex;align-items:center;justify-content:flex-end;gap:1.6rem;font-size:.9375rem;color:var(--ink-2)}
 nav a{text-decoration:none}nav a:hover{color:var(--ink)}
-.intro{max-width:36rem}
-h1{font:600 clamp(2.75rem,4.8vw,4.4rem)/.95 var(--display);letter-spacing:-.04em;white-space:nowrap}
-.lead{margin-top:1rem;font-size:1.25rem;line-height:1.45;color:var(--ink-2);max-width:31rem;text-wrap:pretty}
+.intro{max-width:36rem;--p:0;margin-top:calc((1 - var(--p)) * clamp(6rem,18vh,11rem));flex:0 0 auto}
+.portrait{width:calc(5.25rem + (1 - var(--p)) * 15.75rem);height:calc(5.25rem + (1 - var(--p)) * 15.75rem);max-width:min(21rem,46vw);max-height:min(21rem,46vw);border-radius:calc((1 - var(--p)) * 14px + var(--p) * 50%);object-fit:cover;object-position:center 18%;display:block;margin-bottom:calc(.55rem + (1 - var(--p)) * .85rem);border:1px solid var(--rule);box-shadow:0 8px 24px var(--shadow)}
+.intro-copy{opacity:var(--p);transform:translateY(calc((1 - var(--p)) * 1.4rem));will-change:opacity,transform;pointer-events:none}
+.intro[data-done="1"] .intro-copy{pointer-events:auto}
+h1{font:600 clamp(2.4rem,4.2vw,3.75rem)/.95 var(--display);letter-spacing:-.04em;white-space:nowrap}
+.lead{margin-top:.75rem;font-size:1.125rem;line-height:1.45;color:var(--ink-2);max-width:31rem;text-wrap:pretty}
 .lead strong{color:var(--ink);font-weight:600}
-.facts{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.25rem;list-style:none}
+.facts{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:1rem;list-style:none}
 .facts li{display:inline-flex;align-items:center;gap:.4rem;height:1.9rem;padding:0 .7rem;border-radius:999px;background:var(--soft);font-size:.8125rem;font-weight:500;color:var(--ink-2)}
 .facts svg{width:13px;height:13px;color:var(--hi)}
-.intro .actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem}
+.intro .actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.1rem}
+.journey,.explore{opacity:var(--p);transform:translateY(calc((1 - var(--p)) * .75rem));pointer-events:none}
+.hero[data-intro="1"] .journey,.hero[data-intro="1"] .explore{pointer-events:auto}
+.hero{--p:0}
 
 /* the career journey */
-.journey{margin-top:auto;padding-top:2.75rem;width:min(34rem,44vw)}
-.steps{position:relative;display:grid;grid-template-columns:repeat(5,1fr);margin-bottom:1.1rem}
+.journey{margin-top:auto;padding-top:1.5rem;width:min(34rem,44vw);flex:0 1 auto;min-height:0}
+.steps{position:relative;display:grid;grid-template-columns:repeat(5,1fr);margin-bottom:.85rem}
 .steps::before,.steps .fill{content:"";position:absolute;left:7px;right:calc(20% - 7px);top:7px;height:2px;border-radius:2px;background:var(--rule)}
 .steps .fill{background:var(--hi);transform-origin:left;transform:scaleX(var(--p,0));transition:transform .9s cubic-bezier(.77,0,.175,1)}
 .step{position:relative;border:0;background:none;padding:0 0 0 0;text-align:left;cursor:pointer;display:grid;gap:.45rem;justify-items:start;color:var(--ink-3)}
@@ -113,19 +120,20 @@ h1{font:600 clamp(2.75rem,4.8vw,4.4rem)/.95 var(--display);letter-spacing:-.04em
 .step[aria-selected="true"]{color:var(--ink)}
 .step[aria-selected="true"] i{border-color:var(--hi);background:var(--bg);box-shadow:0 0 0 4px var(--hi-soft)}
 .step.next i{border-style:dashed}
-.jcard{position:relative;min-height:13.5rem;transition:opacity .18s ease,transform .25s var(--ease-out)}
+.jcard{position:relative;min-height:0;transition:opacity .18s ease,transform .25s var(--ease-out)}
 .jcard.out{opacity:0;transform:translateY(6px)}
 .jcard .where{font:400 .8125rem var(--mono);color:var(--ink-3)}
-.jcard h3{margin-top:.35rem;font:600 1.6rem/1.15 var(--display);letter-spacing:-.02em}
+.jcard h3{margin-top:.35rem;font:600 1.45rem/1.15 var(--display);letter-spacing:-.02em}
 .jcard .org{color:var(--ink-2);margin-top:.15rem}
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:1rem}
-.stats .n{font:500 2rem/1 var(--display);letter-spacing:-.03em;color:var(--hi);font-variant-numeric:tabular-nums}
-.stats .l{margin-top:.35rem;font-size:.8125rem;line-height:1.35;color:var(--ink-2)}
-.tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:1rem;list-style:none}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85rem;margin-top:.85rem}
+.stats .n{font:500 1.75rem/1 var(--display);letter-spacing:-.03em;color:var(--hi);font-variant-numeric:tabular-nums}
+.stats .l{margin-top:.3rem;font-size:.8125rem;line-height:1.35;color:var(--ink-2)}
+.tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.85rem;list-style:none}
 .tags li{font-size:.8125rem;padding:.2rem .6rem;border:1px solid var(--rule);border-radius:999px;color:var(--ink-2)}
-.jnav{display:flex;align-items:center;gap:.4rem;margin-top:1.1rem}
+.jcard .actions{margin-top:.85rem}
+.jnav{display:flex;align-items:center;gap:.4rem;margin-top:.85rem}
 .jnav .hint{margin-left:.5rem;font-size:.8125rem;color:var(--ink-3)}
-.explore{position:absolute;right:1.5rem;bottom:2rem;display:grid;justify-items:end;gap:.6rem;max-width:22rem;text-align:right}
+.explore{position:absolute;right:1.5rem;bottom:1.5rem;display:grid;justify-items:end;gap:.6rem;max-width:22rem;text-align:right}
 .panel{margin-top:auto;padding-top:2.75rem;display:grid;gap:.6rem;justify-items:start}
 .panel .row{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
 .clock{font-size:.8125rem;color:var(--ink-2);min-width:12.5rem}
@@ -328,13 +336,17 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 @media (max-width:900px){
-  .hero{min-height:0;overflow:visible}
-  .hero .wrap{min-height:0;display:block;padding-top:5.5rem;padding-bottom:0}
+  .hero{height:auto;--p:1}
+  .hero-pin{position:static;height:auto;min-height:0;overflow:visible}
+  .hero .wrap{min-height:0;height:auto;display:block;padding-top:5.5rem;padding-bottom:0}
   h1{white-space:normal}
   nav{gap:1.1rem}
   .jcard{min-height:0}
-  .intro{position:static}
-  .hero canvas{position:relative;display:block;height:min(78vw,30rem);margin-top:1.5rem}
+  .intro{position:static;--p:1;margin-top:0}
+  .intro-copy{opacity:1;transform:none;pointer-events:auto}
+  .portrait{width:5.25rem;height:5.25rem;max-width:none;max-height:none;margin-bottom:1.1rem;border-radius:50%}
+  .journey,.explore{opacity:1;transform:none;pointer-events:auto}
+  .hero-pin canvas,.hero canvas{position:relative;display:block;height:min(78vw,30rem);margin-top:1.5rem}
   .globe-box{position:relative}
   .panel,.explore{position:static;text-align:left;max-width:none;width:auto;margin-top:1.5rem;justify-items:start}
   .journey{position:static;width:auto;margin-top:1.5rem}
@@ -349,17 +361,40 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
   .chart{height:16rem}
 }
 @media (max-width:900px){ .hero .globe-holder{position:relative} .hero .journey{width:auto;max-width:34rem;padding-top:0} }
+@media (prefers-reduced-motion:reduce){
+  .hero{height:auto}
+  .hero-pin{position:relative;height:max(100svh,760px)}
+  .intro,.hero{--p:1}
+  .intro{margin-top:0}
+  .intro-copy{opacity:1;transform:none;pointer-events:auto}
+  .journey,.explore{opacity:1;transform:none;pointer-events:auto}
+}
+/* shorter laptop screens: keep the journey CTAs inside the pin */
+@media (max-height:860px) and (min-width:901px){
+  .hero-pin{min-height:0}
+  .hero .wrap{padding-top:5rem;padding-bottom:1.15rem}
+  .lead{font-size:1.05rem;margin-top:.6rem}
+  .facts{margin-top:.75rem}
+  .intro .actions{margin-top:.85rem}
+  .journey{padding-top:1.15rem}
+  .jcard h3{font-size:1.35rem}
+  .stats .n{font-size:1.55rem}
+  .jnav{margin-top:.7rem}
+}
 </style>
 </head>
 <body>
 
 <header class="hero" id="top" data-scene="orbit">
+  <div class="hero-pin" id="hero-pin">
   <div class="wrap">
     <nav>
       <a href="#orbitwatch">Work</a><a href="#">CV</a><a href="https://github.com/smymuna">GitHub</a><a href="mailto:mymuna.gmu@gmail.com">Email</a>
       <button class="icon theme" id="theme" aria-label="Switch to light mode"></button>
     </nav>
-    <div class="intro">
+    <div class="intro" id="intro">
+      <img class="portrait" src="portrait.jpg" width="320" height="320" alt="Portrait of Mymuna Sultana">
+      <div class="intro-copy">
       <h1>Mymuna Sultana</h1>
       <p class="lead">Software and data engineer. I build <strong>backend systems and data pipelines</strong> on real data, and this page lets you play with them.</p>
       <ul class="facts">
@@ -372,6 +407,7 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
         <a class="btn dark" href="mailto:mymuna.gmu@gmail.com">Email me</a>
         <a class="btn" href="#">Download CV</a>
         <a class="btn" href="https://linkedin.com/in/mymunasultana">LinkedIn</a>
+      </div>
       </div>
     </div>
     <div class="globe-holder" id="globe-holder"></div>
@@ -423,6 +459,7 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
       </dl>
     </div>
     <div class="tip" id="tip"></div>
+  </div>
   </div>
 </header>
 
@@ -646,13 +683,33 @@ onmessage = e => {
   }
 };`;
 
-const hero = $('.hero'), holder = $('#globe-holder');
+const hero = $('.hero'), pin = $('#hero-pin'), holder = $('#globe-holder'), intro = $('#intro');
 const canvas = document.createElement('canvas');
 canvas.setAttribute('role', 'img');
 canvas.setAttribute('aria-label', 'Interactive globe of every object tracked by OrbitWatch, drawn from real orbital data');
 const mobile = () => innerWidth <= 900;
-const place = () => (mobile() ? holder : hero).prepend(canvas);
+const place = () => (mobile() ? holder : pin).prepend(canvas);
 place();
+/* left-column intro: big portrait → small + copy, driven by scroll through the sticky hero */
+const introEase = t => 1 - Math.pow(1 - t, 3);
+let introP = -1;
+function syncIntro() {
+  const next = (mobile() || reduce) ? 1 : (() => {
+    const range = hero.offsetHeight - pin.offsetHeight;
+    if (range <= 0) return 1;
+    return introEase(Math.min(1, Math.max(0, -hero.getBoundingClientRect().top / range)));
+  })();
+  if (Math.abs(next - introP) < .001) return;
+  introP = next;
+  const v = next.toFixed(4);
+  intro.style.setProperty('--p', v);
+  hero.style.setProperty('--p', v);
+  const done = next > .92 ? '1' : '0';
+  intro.dataset.done = done;
+  hero.dataset.intro = done;
+}
+syncIntro();
+addEventListener('scroll', syncIntro, { passive: true });
 const ctx = canvas.getContext('2d');
 const G = { w: 0, h: 0, dpr: 1, cx: 0, cy: 0, R: 1, zoom: 1, lon: 79.6 * D, lat: 13 * D, vlon: 0, vlat: 0, drag: null,
   speed: reduce ? 0 : 60, lastSpeed: 60, sim: Date.now(), wall: performance.now(), filter: 'all', hover: -1, mouse: null,
@@ -666,7 +723,7 @@ function size() {
   if (mobile()) { G.cx = G.w / 2; G.cy = G.h / 2; G.R = Math.min(G.w, G.h) * .34; }
   else { G.cx = G.w * .66; G.cy = G.h * .5; G.R = Math.min(G.w * .5, G.h) * .33; }
 }
-addEventListener('resize', () => { place(); size(); });
+addEventListener('resize', () => { place(); size(); syncIntro(); });
 
 function request() {
   if (!G.ready || busy) return;
@@ -933,7 +990,7 @@ $('#j-next').addEventListener('click', () => goTo(Math.min(STOPS.length - 1, J.i
 function cardHTML(st) {
   const stats = st.stats ? `<div class="stats">${st.stats.map(x => `<div><div class="n" data-n="${x.n}" data-pre="${x.pre || ''}" data-suf="${x.suf || ''}">${x.pre || ''}${x.n}${x.suf || ''}</div><div class="l">${x.l}</div></div>`).join('')}</div>` : '';
   const tags = st.tags ? `<ul class="tags">${st.tags.map(t => `<li>${t}</li>`).join('')}</ul>` : '';
-  const cta = st.cta ? `<div class="actions" style="display:flex;gap:.5rem;margin-top:1.1rem"><a class="btn blue" href="mailto:mymuna.gmu@gmail.com">Let's talk</a><a class="btn" href="#">Download CV</a></div>` : '';
+  const cta = st.cta ? `<div class="actions" style="display:flex;flex-wrap:wrap;gap:.5rem"><a class="btn blue" href="mailto:mymuna.gmu@gmail.com">Let's talk</a><a class="btn" href="#">Download CV</a></div>` : '';
   return `<p class="where">${st.where}</p><h3>${st.title}</h3><p class="org">${st.org}</p>${stats}${tags}${cta}`;
 }
 function countUp() {
