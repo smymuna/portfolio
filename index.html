@@ -469,9 +469,10 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
     <div class="head">
       <div>
         <h2>OrbitWatch</h2>
-        <p>The globe above is this project. A Dagster and dbt pipeline snapshots every tracked object every 6 hours, keeps the history the source throws away, and screens 200 million possible pairs for close approaches.</p>
-        <div class="meta"><span>Dagster · dbt · DuckDB · SGP4 · Python</span><span>34 tests</span><a href="https://github.com/smymuna/orbitwatch">Repository</a><a href="#">Case study</a></div>
+        <p>The globe above is this project, with data from its latest run. A Dagster and dbt pipeline on GitHub Actions snapshots every tracked object every 6 hours, keeps the history the source throws away, and screens 200 million possible pairs for close approaches.</p>
+        <div class="meta"><span>Dagster · dbt · DuckDB · SGP4 · Python</span><span>36 tests</span><a href="https://github.com/smymuna/orbitwatch">Repository</a><a href="https://smymuna.github.io/orbitwatch/">Live site</a><a href="#">Case study</a></div>
       </div>
+      <a class="btn blue" href="https://smymuna.github.io/orbitwatch/">Open OrbitWatch<svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
     </div>
   </section>
 
@@ -1101,7 +1102,7 @@ function backToStory() {
   const i = J.i; J.i = -1; goTo(i < 0 ? STOPS.length - 1 : i);
   $('#go-explore').focus();
 }
-const storyCaption = 'This globe also runs OrbitWatch, my space traffic pipeline: 19,375 real objects in orbit.';
+let storyCaption = 'This globe also runs OrbitWatch, my space traffic pipeline: about 19,000 real objects in orbit.';
 $('#caption').textContent = storyCaption;
 $('#go-explore').addEventListener('click', enterExplore);
 $('#back-story').addEventListener('click', backToStory);
@@ -1110,7 +1111,10 @@ setTimeout(playStory, 700);
 
 /* boot */
 size(); frame.stopped = true; start();
-Promise.all([fetch('data/orbits.json').then(r => r.json()), fetch('data/land.json').then(r => r.json())]).then(([d, l]) => {
+// the newest OrbitWatch run (its site is rebuilt every 6 hours); the copy in this repo is the fallback
+const json = (u, cache = 'default') => fetch(u, { cache }).then(r => { if (!r.ok) throw new Error(u); return r.json(); });
+const orbitsLive = json('https://smymuna.github.io/orbitwatch/data/orbits.json', 'no-cache').catch(() => json('data/orbits.json'));
+Promise.all([orbitsLive, json('data/land.json')]).then(([d, l]) => {
   D0 = d; objs = d.objects; n = objs.length;
   types = Uint8Array.from(objs, o => o[10]); names = objs.map(o => o[1]);
   P = new Float32Array(n * 3); SX = new Float32Array(n); SY = new Float32Array(n); DZ = new Float32Array(n);
@@ -1121,7 +1125,10 @@ Promise.all([fetch('data/orbits.json').then(r => r.json()), fetch('data/land.jso
   }
   const cnt = [0, 0, 0]; types.forEach(t => cnt[t === 3 ? 2 : t]++);
   $('#n-all').textContent = nf.format(n); $('#n-0').textContent = nf.format(cnt[0]); $('#n-1').textContent = nf.format(cnt[1]);
-  G.fullCaption = `${nf.format(n)} real objects from OrbitWatch's data release of ${new Date(d.snapshot).toLocaleDateString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' })}: active satellites and four debris clouds, propagated with SGP4 right here in your browser.`;
+  const snap = new Date(d.snapshot_at || d.snapshot).toLocaleString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', hour12: false });
+  G.fullCaption = `${nf.format(n)} real objects from OrbitWatch's snapshot of ${snap} UTC: active satellites and four debris clouds, propagated with SGP4 right here in your browser.`;
+  storyCaption = `This globe also runs OrbitWatch, my space traffic pipeline: ${nf.format(n)} real objects in orbit.`;
+  if (G.mode === 'story') $('#caption').textContent = storyCaption;
   if (G.mode !== 'story') $('#caption').textContent = G.fullCaption;
   worker = new Worker(URL.createObjectURL(new Blob([workerSrc], { type: 'text/javascript' })));
   worker.onmessage = e => {
@@ -1590,7 +1597,10 @@ themeBtn.addEventListener('click', () => {
   const light = document.documentElement.dataset.theme !== 'light';
   const apply = () => { if (light) document.documentElement.dataset.theme = 'light'; else delete document.documentElement.dataset.theme; syncTheme(); };
   try { localStorage.setItem('theme', light ? 'light' : 'dark'); } catch (e) {}
-  if (document.startViewTransition && !reduce) document.startViewTransition(apply); else apply();
+  if (document.startViewTransition && !reduce) {
+    // an interrupted transition (tab hidden, page left) rejects these; the theme still applies
+    const t = document.startViewTransition(apply); t.ready.catch(() => {}); t.finished.catch(() => {});
+  } else apply();
 });
 syncTheme();
 })();
