@@ -389,7 +389,7 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
   <div class="hero-pin" id="hero-pin">
   <div class="wrap">
     <nav>
-      <a href="#orbitwatch">Work</a><a href="#">CV</a><a href="https://github.com/smymuna">GitHub</a><a href="mailto:mymuna.gmu@gmail.com">Email</a>
+      <a href="#orbitwatch">Work</a><a href="Mymuna_Sultana_CV.pdf" target="_blank" rel="noopener">CV</a><a href="https://github.com/smymuna">GitHub</a><a href="mailto:mymuna.gmu@gmail.com">Email</a>
       <button class="icon theme" id="theme" aria-label="Switch to light mode"></button>
     </nav>
     <div class="intro" id="intro">
@@ -405,7 +405,7 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
       </ul>
       <div class="actions">
         <a class="btn dark" href="mailto:mymuna.gmu@gmail.com">Email me</a>
-        <a class="btn" href="#">Download CV</a>
+        <a class="btn" href="Mymuna_Sultana_CV.pdf" download="Mymuna_Sultana_CV.pdf">Download CV</a>
         <a class="btn" href="https://linkedin.com/in/mymunasultana">LinkedIn</a>
       </div>
       </div>
@@ -991,7 +991,7 @@ $('#j-next').addEventListener('click', () => goTo(Math.min(STOPS.length - 1, J.i
 function cardHTML(st) {
   const stats = st.stats ? `<div class="stats">${st.stats.map(x => `<div><div class="n" data-n="${x.n}" data-pre="${x.pre || ''}" data-suf="${x.suf || ''}">${x.pre || ''}${x.n}${x.suf || ''}</div><div class="l">${x.l}</div></div>`).join('')}</div>` : '';
   const tags = st.tags ? `<ul class="tags">${st.tags.map(t => `<li>${t}</li>`).join('')}</ul>` : '';
-  const cta = st.cta ? `<div class="actions" style="display:flex;flex-wrap:wrap;gap:.5rem"><a class="btn blue" href="mailto:mymuna.gmu@gmail.com">Let's talk</a><a class="btn" href="#">Download CV</a></div>` : '';
+  const cta = st.cta ? `<div class="actions" style="display:flex;flex-wrap:wrap;gap:.5rem"><a class="btn blue" href="mailto:mymuna.gmu@gmail.com">Let's talk</a><a class="btn" href="Mymuna_Sultana_CV.pdf" download="Mymuna_Sultana_CV.pdf">Download CV</a></div>` : '';
   return `<p class="where">${st.where}</p><h3>${st.title}</h3><p class="org">${st.org}</p>${stats}${tags}${cta}`;
 }
 function countUp() {
