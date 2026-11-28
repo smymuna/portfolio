@@ -470,7 +470,7 @@ footer .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.75rem}
       <div>
         <h2>OrbitWatch</h2>
         <p>The globe above is this project, with data from its latest run. A Dagster and dbt pipeline on GitHub Actions snapshots every tracked object every 6 hours, keeps the history the source throws away, and screens 200 million possible pairs for close approaches.</p>
-        <div class="meta"><span>Dagster · dbt · DuckDB · SGP4 · Python</span><span>40 tests</span><a href="https://github.com/smymuna/orbitwatch">Repository</a><a href="https://smymuna.github.io/orbitwatch/">Live site</a></div>
+        <div class="meta"><span>Dagster · dbt · DuckDB · SGP4 · Python</span><span>42 tests</span><a href="https://github.com/smymuna/orbitwatch">Repository</a><a href="https://smymuna.github.io/orbitwatch/">Live site</a></div>
       </div>
       <a class="btn blue" href="https://smymuna.github.io/orbitwatch/">Open OrbitWatch<svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
     </div>
@@ -1102,7 +1102,7 @@ function backToStory() {
   const i = J.i; J.i = -1; goTo(i < 0 ? STOPS.length - 1 : i);
   $('#go-explore').focus();
 }
-let storyCaption = 'This globe also runs OrbitWatch, my space traffic pipeline: about 19,000 real objects in orbit.';
+let storyCaption = 'This globe also runs OrbitWatch, my space traffic pipeline: about 22,000 real objects in orbit.';
 $('#caption').textContent = storyCaption;
 $('#go-explore').addEventListener('click', enterExplore);
 $('#back-story').addEventListener('click', backToStory);
@@ -1126,7 +1126,7 @@ Promise.all([orbitsLive, json('data/land.json')]).then(([d, l]) => {
   const cnt = [0, 0, 0]; types.forEach(t => cnt[t === 3 ? 2 : t]++);
   $('#n-all').textContent = nf.format(n); $('#n-0').textContent = nf.format(cnt[0]); $('#n-1').textContent = nf.format(cnt[1]);
   const snap = new Date(d.snapshot_at || d.snapshot).toLocaleString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', hour12: false });
-  G.fullCaption = `${nf.format(n)} real objects from OrbitWatch's snapshot of ${snap} UTC: active satellites and four debris clouds, propagated with SGP4 right here in your browser.`;
+  G.fullCaption = `${nf.format(n)} real objects from OrbitWatch's snapshot of ${snap} UTC: active satellites, rocket bodies and four debris clouds, propagated with SGP4 right here in your browser.`;
   storyCaption = `This globe also runs OrbitWatch, my space traffic pipeline: ${nf.format(n)} real objects in orbit.`;
   if (G.mode === 'story') $('#caption').textContent = storyCaption;
   if (G.mode !== 'story') $('#caption').textContent = G.fullCaption;
